@@ -1,0 +1,21 @@
+@startuml ATM_Service_UseCases
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 120
+
+left to right direction
+
+actor "Инкассатор" as CashCollector
+
+rectangle "Модель банкомата" {
+
+    usecase "Пополнение наличными" as Replenish
+    usecase "Изъятие наличных" as Collect
+    usecase "Замена чековой ленты" as ReplacePaper
+}
+
+CashCollector --> Replenish
+CashCollector --> Collect
+CashCollector --> ReplacePaper
+
+@enduml

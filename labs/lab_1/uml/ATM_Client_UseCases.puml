@@ -1,0 +1,45 @@
+@startuml ATM_Client_UseCases
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 120
+
+left to right direction
+
+actor "Клиент" as Client
+actor "Банк" as Bank
+
+rectangle "Модель банкомата" {
+
+    usecase "Аутентификация" as Auth
+    usecase "Просмотр баланса" as Balance
+    usecase "Снятие наличных" as Withdraw
+    usecase "Внесение наличных" as Deposit
+    usecase "Перевод средств" as Transfer
+    usecase "Оплата услуг" as Payment
+    usecase "Смена PIN-кода" as ChangePIN
+    usecase "Завершение сессии" as Logout
+
+    usecase "Изъятие и блокировка карты" as RetainBlock
+}
+
+Client --> Auth
+Client --> Balance
+Client --> Withdraw
+Client --> Deposit
+Client --> Transfer
+Client --> Payment
+Client --> ChangePIN
+Client --> Logout
+
+Auth .> Balance   : <<include>>
+Auth .> Withdraw  : <<include>>
+Auth .> Deposit   : <<include>>
+Auth .> Transfer  : <<include>>
+Auth .> Payment   : <<include>>
+Auth .> ChangePIN : <<include>>
+
+Auth .> RetainBlock : <<extend>>
+
+Bank --> Auth : авторизация и блокировка
+
+@enduml

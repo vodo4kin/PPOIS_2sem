@@ -77,7 +77,7 @@
 - **Завершение сессии** — Клиент выходит из системы, карта извлекается или сессия завершается по таймауту.
 
 <div align="center">
-   <img src="img/ATM_Client_UseCases.png" width="400" alt="Диаграмма клиентских сценариев" align>
+   <img src="uml/img/ATM_Client_UseCases.png" width="400" alt="Диаграмма клиентских сценариев" align>
 </div>
 
 ### Сценарии обслуживания (Инкассатор)
@@ -87,5 +87,5 @@
 - **Замена чековой ленты** — Инкассатор заменяет чековую ленту.
 
 <div align="center">
-   <img src="img/ATM_Service_UseCases.png" width="400" alt="Диаграмма сценариев обслуживания">
+   <img src="uml/img/ATM_Service_UseCases.png" width="400" alt="Диаграмма сценариев обслуживания">
 </div>

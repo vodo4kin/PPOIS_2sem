@@ -123,3 +123,85 @@
 <div align="center">
     <img src="uml/img/ATM_Technician_StateMachine.png" width="600" alt="Диаграмма состояний технического специалиста">
 </div>
+
+## Проектирование классов
+
+Проектирование классов выполнено с учётом принципов SOLID. Система разбита на модули, каждый из которых отвечает за свою область ответственности.
+
+### Структура модулей и классов
+
+- **UserInterfaceModule** — отвечает за взаимодействие с пользователем через CLI  
+  - `Display` — вывод информации на консоль  
+  - `Keypad` — обработка ввода пользователя  
+  - `SessionTimer` — отслеживание таймаута неактивности  
+  - `SoundPlayer` — симуляция звуковых сигналов (print)
+
+- **CardReaderModule** — работа с банковскими картами  
+  - `CardReader` — симуляция чтения карты  
+  - `Card` — данные карты (номер, срок действия и т.д.)  
+  - `CardRetainer` — логика удержания карты  
+  - `CardStatusChecker` — проверка статуса карты (заблокирована или нет)
+
+- **AuthenticationModule** — аутентификация пользователей  
+  - `AuthenticationService` — основной сервис аутентификации  
+  - `PinValidator` — проверка PIN-кода  
+  - `CardBlockStatusChecker` — запрос статуса блокировки карты
+
+- **TransactionModule** — выполнение клиентских операций  
+  - `Transaction` — абстрактный базовый класс транзакции  
+  - `TransactionFactory` — фабрика создания транзакций  
+  - `WithdrawalTransaction` — снятие наличных  
+  - `DepositTransaction` — внесение наличных  
+  - `BalanceInquiryTransaction` — просмотр баланса  
+  - `PinChangeTransaction` — смена PIN  
+  - `TransferTransaction` — перевод средств  
+  - `PaymentTransaction` — оплата услуг
+
+- **CashHandlingModule** — работа с наличными деньгами  
+  - `CashDispenser` — выдача наличных  
+  - `CashAcceptor` — приём наличных  
+  - `CashInventory` — учёт наличных в кассетах
+
+- **ReceiptPrinterModule** — печать чеков и отчётов  
+  - `ReceiptPrinter` — симуляция печати  
+  - `ReceiptTemplate` — шаблон чека  
+  - `PaperSensor` — датчик наличия бумаги
+
+- **CashManagementModule** — инкассация и управление наличными  
+  - `CashReplenisher` — пополнение кассет  
+  - `CashCollector` — изъятие наличных  
+  - `CassetteManager` — управление кассетами  
+  - `CashReplenisherAuthenticator` — авторизация инкассатора
+
+- **TechnicianServiceModule** — техническое обслуживание  
+  - `RetainedCardCollector` — извлечение удержанных карт  
+  - `PowerController` — управление питанием  
+  - `RebootController` — перезагрузка банкомата  
+  - `TechnicianAuthenticator` — авторизация техника
+
+- **BankCommunicationModule** — взаимодействие с банком  
+  - `BankGateway` — шлюз к банку (симуляция)  
+  - `MockBankRepository` — имитация базы банка (карты, счета, статусы)  
+  - `AccountData` — данные счёта (баланс, блокировка, PIN)
+
+- **PowerAndHardwareModule** — управление питанием и аппаратной частью  
+  - `PowerManager` — симуляция включения/выключения
+
+- **SessionManager** — управление сессиями и состояниями  
+  - `ATMStateMachine` — конечный автомат состояний  
+  - `Session` — текущая сессия  
+  - `SessionType` — тип сессии (enum: CLIENT, CASH_REPLENISHER, TECHNICIAN)  
+  - `State` — базовый класс состояния  
+  - `StateSaver` — сохранение состояния  
+  - `Logger` — логирование событий
+
+- **Сквозные классы**  
+  - `ATM` — главный оркестратор системы (композирует модули)  
+  - `Configuration` — глобальные настройки  
+  - `PersistenceManager` — сохранение/загрузка состояния системы
+
+### Диаграмма модулей и классов
+
+<div align="center">
+    <img src="uml/img/Class_Diagram.png" width="600" alt="Диаграмма модулей и классов">
+</div>

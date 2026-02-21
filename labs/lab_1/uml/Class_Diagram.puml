@@ -1,0 +1,143 @@
+@startuml Class_Diagram
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 300
+skinparam packageStyle rectangle
+
+package "UserInterfaceModule" {
+  class Display
+  class Keypad
+  class SessionTimer
+  class SoundPlayer
+}
+
+package "CardReaderModule" {
+  class CardReader
+  class Card
+  class CardRetainer
+  class CardStatusChecker
+}
+
+package "AuthenticationModule" {
+  class AuthenticationService
+  class PinValidator
+  class CardBlockStatusChecker
+}
+
+package "TransactionModule" {
+  abstract class Transaction
+  class TransactionFactory
+  class WithdrawalTransaction
+  class DepositTransaction
+  class BalanceInquiryTransaction
+  class PinChangeTransaction
+  class TransferTransaction
+  class PaymentTransaction
+}
+
+package "CashHandlingModule" {
+  class CashDispenser
+  class CashAcceptor
+  class CashInventory
+}
+
+package "ReceiptPrinterModule" {
+  class ReceiptPrinter
+  class ReceiptTemplate
+  class PaperSensor
+}
+
+package "CashManagementModule" {
+  class CashReplenisher
+  class CashCollector
+  class CassetteManager
+  class CashReplenisherAuthenticator
+}
+
+package "TechnicianServiceModule" {
+  class RetainedCardCollector
+  class PowerController
+  class RebootController
+  class TechnicianAuthenticator
+}
+
+package "BankCommunicationModule" {
+  class BankGateway
+  class MockBankRepository
+  class AccountData
+}
+
+package "PowerAndHardwareModule" {
+  class PowerManager
+}
+
+package "SessionManager" {
+  class ATMStateMachine
+  class Session
+  class SessionType
+  class State
+  class StateSaver
+  class Logger
+}
+
+package "Сквозные" {
+  class ATM
+  class Configuration
+  class PersistenceManager
+}
+
+' Центральные связи
+ATM *-- AuthenticationService
+ATM *-- TransactionFactory
+ATM *-- ATMStateMachine
+ATM *-- Session
+ATM *-- BankGateway
+ATM *-- CashInventory
+ATM *-- PowerManager
+
+' Транзакции
+TransactionFactory ..> Transaction : создаёт
+Transaction <|-- WithdrawalTransaction
+Transaction <|-- DepositTransaction
+Transaction <|-- BalanceInquiryTransaction
+Transaction <|-- PinChangeTransaction
+Transaction <|-- TransferTransaction
+Transaction <|-- PaymentTransaction
+
+' Карты
+CardReader ..> Card : читает
+CardReader *-- CardRetainer : управляет удержанием
+
+' Аутентификация
+AuthenticationService *-- PinValidator
+AuthenticationService *-- CardBlockStatusChecker
+AuthenticationService ..> BankGateway : запрашивает
+
+' Наличные
+CashDispenser ..> CashInventory : уменьшает
+CashAcceptor ..> CashInventory : увеличивает
+CashReplenisher ..> CashInventory : увеличивает (пополнение)
+CashCollector ..> CashInventory : уменьшает (изъятие)
+CassetteManager ..> CashInventory : управляет кассетами
+
+' Печать
+ReceiptPrinter ..> ReceiptTemplate
+ReceiptPrinter ..> PaperSensor
+
+' Инкассатор и техник
+CashReplenisherAuthenticator ..> CashReplenisher : авторизует операции
+TechnicianAuthenticator ..> RetainedCardCollector
+TechnicianAuthenticator ..> PowerController
+TechnicianAuthenticator ..> RebootController
+
+' Состояния и сессии
+ATMStateMachine *-- State
+Session *-- SessionType
+PersistenceManager ..> ATMStateMachine : сохраняет
+PersistenceManager ..> CashInventory : сохраняет
+
+' Настройки и логи
+Configuration ..> ATM : предоставляет
+Logger ..> ATM : логирует
+
+@enduml

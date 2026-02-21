@@ -1,4 +1,4 @@
-@startuml ATM_Service_StateMachine
+@startuml ATM_Client_StateMachine
 skinparam monochrome true
 skinparam shadowing false
 skinparam dpi 150
@@ -7,10 +7,10 @@ skinparam dpi 150
 
 state NoKey {
   [*] --> Idle : Нет ключа
+  Idle --> KeyInserted : Вставка ключа
 }
 
-state ServiceMode {
-  [*] --> KeyInserted : Вставка ключа
+state KeyInserted {
   KeyInserted --> ServiceMenu : Доступ разрешён
 }
 

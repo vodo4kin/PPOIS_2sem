@@ -7,10 +7,10 @@ skinparam dpi 150
 
 state NoAccess {
   [*] --> Idle : Нет доступа
+  Idle --> Authenticated : Вставка служебной карты + ввод PIN
 }
 
-state TechnicianMode {
-  [*] --> Authenticated : Вставка служебной карты + PIN
+state Authenticated {
   Authenticated --> TechMenu : Доступ разрешён
 }
 
@@ -27,7 +27,7 @@ state TechMenu {
 }
 
 state TechnicianEnding {
-  [*] --> Logout : Выход из режима
+  [*] --> Logout : Выход из режима (извлечение карты / выход)
   Logout --> NoAccess : Доступ закрыт
 }
 
@@ -39,7 +39,6 @@ end note
 
 note right of TechMenu
   Все операции локальные
-  или с доступом к устройству
 end note
 
 @enduml

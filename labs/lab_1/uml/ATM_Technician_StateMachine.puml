@@ -1,0 +1,45 @@
+@startuml ATM_Technician_StateMachine
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 150
+
+[*] --> NoAccess
+
+state NoAccess {
+  [*] --> Idle : Нет доступа
+}
+
+state TechnicianMode {
+  [*] --> Authenticated : Вставка служебной карты + PIN
+  Authenticated --> TechMenu : Доступ разрешён
+}
+
+state TechMenu {
+  [*] --> Available
+  Available --> RetrieveCards : Извлечение удержанных карт
+  Available --> PowerControl : Включение/выключение
+  Available --> Diagnostics : Диагностика и ремонт
+  Available --> Reboot : Перезагрузка
+  RetrieveCards --> Available : Завершено
+  PowerControl --> Available : Завершено
+  Diagnostics --> Available : Завершено
+  Reboot --> Available : Перезагрузка завершена
+}
+
+state TechnicianEnding {
+  [*] --> Logout : Выход из режима
+  Logout --> NoAccess : Доступ закрыт
+}
+
+TechMenu --> TechnicianEnding : Завершение работы
+
+note right of Authenticated
+  Служебная карта + PIN
+end note
+
+note right of TechMenu
+  Все операции локальные
+  или с доступом к устройству
+end note
+
+@enduml

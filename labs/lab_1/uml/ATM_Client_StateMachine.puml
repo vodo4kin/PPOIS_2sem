@@ -1,0 +1,66 @@
+@startuml Client_StateMachine
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 150
+
+[*] --> NoCard
+
+state NoCard {
+  [*] --> Idle : Нет карты
+}
+
+state CardInserted {
+  [*] --> CardIn : Карта вставлена
+  CardIn --> PIN_Entry : Начало ввода PIN
+}
+
+state PIN_Entry {
+  [*] --> EnteringPIN : Ввод PIN
+  EnteringPIN --> PIN_Entry : Неверный PIN [попытки < 3]
+  EnteringPIN --> Authenticated : Корректный PIN
+  EnteringPIN --> CardRetainedBlocked : Неверный PIN [попытки >= 3]
+  EnteringPIN --> CardRetainedBlocked : Карта уже заблокирована
+}
+
+state Authenticated {
+  [*] --> Menu : Меню операций
+  Menu --> Transaction : Выбор операции
+  Transaction --> Menu : Операция завершена
+  Menu --> PrintCheckQuestion : Запрос "Печатать чек?"
+}
+
+state PrintCheckQuestion {
+  PrintCheckQuestion --> PrintingCheck : Да
+  PrintCheckQuestion --> Menu : Нет
+}
+
+state PrintingCheck {
+  [*] --> Print : Печать чека
+  Print --> Menu : Завершено
+}
+
+state SessionEnding {
+  [*] --> EjectCard : Извлечение карты
+  EjectCard --> NoCard : Карта извлечена
+}
+
+state CardRetainedBlocked {
+  [*] --> Retained : Карта изъята
+  Retained --> Blocked : Карта заблокирована
+  Blocked --> NoCard : После сообщения / таймаут
+}
+
+NoCard --> CardInserted : Вставка карты
+Authenticated --> SessionEnding : Таймаут / Явный выход / Завершение
+Transaction --> SessionEnding : Завершение операции
+PrintCheckQuestion --> SessionEnding : Завершение
+
+note right of PIN_Entry
+  Проверка через банк
+end note
+
+note right of CardRetainedBlocked
+  Блокировка + изъятие карты
+end note
+
+@enduml

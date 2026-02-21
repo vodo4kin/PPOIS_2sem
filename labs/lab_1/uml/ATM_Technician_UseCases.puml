@@ -1,0 +1,45 @@
+@startuml ATM_Technician_UseCases
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 120
+
+left to right direction
+
+actor "Технический специалист" as Technician
+
+rectangle "Модель банкомата" {
+
+    usecase "Извлечение удержанных карт" as RetrieveCards
+    usecase "Включение/выключение" as PowerOnOff
+    usecase "Диагностика и ремонт" as DiagnosticsRepair
+    usecase "Перезагрузка банкомата" as Reboot
+}
+
+Technician --> RetrieveCards
+Technician --> PowerOnOff
+Technician --> DiagnosticsRepair
+Technician --> Reboot
+
+note right of RetrieveCards
+  Из ловушки удержанных карт
+  (retain bin)
+end note
+
+note right of PowerOnOff
+  Для ремонта,
+  обновления или
+  планового ТО
+end note
+
+note right of DiagnosticsRepair
+  Самотестирование,
+  замена компонентов,
+  обновление ПО
+end note
+
+note right of Reboot
+  Принудительная
+  перезагрузка
+end note
+
+@enduml

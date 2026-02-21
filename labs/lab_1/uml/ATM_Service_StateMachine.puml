@@ -1,0 +1,43 @@
+@startuml ATM_Service_StateMachine
+skinparam monochrome true
+skinparam shadowing false
+skinparam dpi 150
+
+[*] --> NoKey
+
+state NoKey {
+  [*] --> Idle : Нет ключа
+}
+
+state ServiceMode {
+  [*] --> KeyInserted : Вставка ключа
+  KeyInserted --> ServiceMenu : Доступ разрешён
+}
+
+state ServiceMenu {
+  [*] --> Available
+  Available --> Replenish : Пополнение наличными
+  Available --> Collect : Изъятие наличных
+  Available --> ReplacePaper : Замена чековой ленты
+  Replenish --> Available : Завершено
+  Collect --> Available : Завершено
+  ReplacePaper --> Available : Завершено
+}
+
+state ServiceEnding {
+  [*] --> CloseCassettes : Закрытие кассет
+  CloseCassettes --> RemoveKey : Извлечение ключа
+  RemoveKey --> NoKey : Ключ извлечён
+}
+
+ServiceMenu --> ServiceEnding : Завершение обслуживания
+
+note right of KeyInserted
+  Физический ключ в замок
+end note
+
+note right of ServiceMenu
+  Все операции локальные
+end note
+
+@enduml

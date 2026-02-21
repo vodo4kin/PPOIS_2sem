@@ -202,6 +202,9 @@
 
 ### Диаграмма модулей и классов
 
+Просмотреть в исходном качестве: [тык](uml/img/Class_Diagram.svg)
+
+Предпросмотр:
 <div align="center">
     <img src="uml/img/Class_Diagram.svg" width="600" alt="Диаграмма модулей и классов">
 </div>

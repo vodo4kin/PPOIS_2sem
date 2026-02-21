@@ -203,5 +203,5 @@
 ### Диаграмма модулей и классов
 
 <div align="center">
-    <img src="uml/img/Class_Diagram.png" width="600" alt="Диаграмма модулей и классов">
+    <img src="uml/img/Class_Diagram.svg" width="600" alt="Диаграмма модулей и классов">
 </div>

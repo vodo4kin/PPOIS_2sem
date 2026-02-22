@@ -31,13 +31,4 @@ state ServiceEnding {
 
 ServiceMenu --> ServiceEnding : 4. Exit
 
-note right of CardAndPIN
-  В реализации: карта 1000000000000001, PIN 1111
-end note
-
-note right of ServiceMenu
-  Операции с CashInventory,
-  сохранение в atm_state.json
-end note
-
 @enduml

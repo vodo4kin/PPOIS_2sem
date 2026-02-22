@@ -21,9 +21,4 @@ note right of RetrieveCards
   (retain bin)
 end note
 
-note right of Reboot
-  В реализации: только извлечение карт
-  и перезагрузка
-end note
-
 @enduml

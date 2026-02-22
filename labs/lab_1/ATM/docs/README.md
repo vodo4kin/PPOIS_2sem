@@ -51,12 +51,11 @@
 
 Из каталога `ATM`:
 ```bash
-cd labs/lab_1/ATM
 PYTHONPATH=src python3 -m atm.main
 ```
 или из `ATM/src`:
 ```bash
-cd labs/lab_1/ATM/src
+cd src
 PYTHONPATH=. python3 main.py
 ```
 

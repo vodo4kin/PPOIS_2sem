@@ -6,27 +6,27 @@ skinparam dpi 150
 [*] --> NoAccess
 
 state NoAccess {
-  [*] --> Idle : Нет доступа
-  Idle --> CardAndPIN : Карта инкассатора (16 цифр) + PIN
+    [*] --> Idle : Нет доступа
+    Idle --> CardAndPIN : Карта инкассатора (16 цифр) + PIN
 }
 
 state CardAndPIN {
-  CardAndPIN --> ServiceMenu : Аутентификация успешна
+    CardAndPIN --> ServiceMenu : Аутентификация успешна
 }
 
 state ServiceMenu {
-  [*] --> Available
-  Available --> Replenish : 1. Пополнение наличными
-  Available --> Collect : 2. Изъятие наличных
-  Available --> ReplaceCassette : 3. Замена кассеты
-  Replenish --> Available : Завершено
-  Collect --> Available : Завершено
-  ReplaceCassette --> Available : Завершено
+    [*] --> Available
+    Available --> Replenish : 1. Пополнение наличными
+    Available --> Collect : 2. Изъятие наличных
+    Available --> ReplaceCassette : 3. Замена кассеты
+    Replenish --> Available : Завершено
+    Collect --> Available : Завершено
+    ReplaceCassette --> Available : Завершено
 }
 
 state ServiceEnding {
-  [*] --> Logout : 4. Exit
-  Logout --> NoAccess : Выход
+    [*] --> Logout : 4. Exit
+    Logout --> NoAccess : Выход
 }
 
 ServiceMenu --> ServiceEnding : 4. Exit

@@ -6,46 +6,46 @@ skinparam dpi 150
 [*] --> NoCard
 
 state NoCard {
-  [*] --> Idle : Нет карты
+    [*] --> Idle : Нет карты
 }
 
 state CardInserted {
-  [*] --> CardIn : Карта вставлена (16 цифр)
+    [*] --> CardIn : Карта вставлена (16 цифр)
 }
 
 state PIN_Entry {
-  [*] --> EnteringPIN : Ввод PIN
-  EnteringPIN --> PIN_Entry : Неверный PIN [попытки < 3]
-  EnteringPIN --> Authenticated : Корректный PIN
-  EnteringPIN --> CardRetainedBlocked : Неверный PIN [попытки >= 3]
-  EnteringPIN --> CardRetainedBlocked : Карта уже заблокирована
+    [*] --> EnteringPIN : Ввод PIN
+    EnteringPIN --> PIN_Entry : Неверный PIN [попытки < 3]
+    EnteringPIN --> Authenticated : Корректный PIN
+    EnteringPIN --> CardRetainedBlocked : Неверный PIN [попытки >= 3]
+    EnteringPIN --> CardRetainedBlocked : Карта уже заблокирована
 }
 
 state Authenticated {
-  [*] --> Menu : Меню операций
-  Menu --> CheckBalance : 1. Check Balance
-  Menu --> Withdraw : 2. Withdraw
-  Menu --> Deposit : 3. Deposit
-  Menu --> Transfer : 4. Transfer
-  Menu --> Payment : 5. Payment
-  Menu --> PinChange : 6. Pin Change
-  CheckBalance --> Menu : результат + Enter
-  Withdraw --> Menu : результат + Enter
-  Deposit --> Menu : результат + Enter
-  Transfer --> Menu : результат + Enter
-  Payment --> Menu : результат + Enter
-  PinChange --> Menu : результат + Enter
+    [*] --> Menu : Меню операций
+    Menu --> CheckBalance : 1. Check Balance
+    Menu --> Withdraw : 2. Withdraw
+    Menu --> Deposit : 3. Deposit
+    Menu --> Transfer : 4. Transfer
+    Menu --> Payment : 5. Payment
+    Menu --> PinChange : 6. Pin Change
+    CheckBalance --> Menu : результат + Enter
+    Withdraw --> Menu : результат + Enter
+    Deposit --> Menu : результат + Enter
+    Transfer --> Menu : результат + Enter
+    Payment --> Menu : результат + Enter
+    PinChange --> Menu : результат + Enter
 }
 
 state SessionEnding {
-  [*] --> EjectCard : Извлечение карты
-  EjectCard --> NoCard : Карта извлечена
+    [*] --> EjectCard : Извлечение карты
+    EjectCard --> NoCard : Карта извлечена
 }
 
 state CardRetainedBlocked {
-  [*] --> Retained : Карта изъята
-  Retained --> Blocked : Карта заблокирована
-  Blocked --> NoCard : После сообщения
+    [*] --> Retained : Карта изъята
+    Retained --> Blocked : Карта заблокирована
+    Blocked --> NoCard : После сообщения
 }
 
 NoCard --> CardInserted : Вставка карты (16 цифр)
@@ -54,16 +54,16 @@ Authenticated --> SessionEnding : 7. Exit / Таймаут
 Menu --> SessionEnding : 7. Exit
 
 note right of PIN_Entry
-  Проверка через BankGateway
+    Проверка через BankGateway
 end note
 
 note right of CardRetainedBlocked
-  Блокировка в банке + изъятие карты
+    Блокировка в банке + изъятие карты
 end note
 
 note right of Authenticated
-  После каждой операции:
-  результат на экран, *Beep* в лог, Enter
+    После каждой операции:
+    результат на экран, *Beep* в лог, Enter
 end note
 
 @enduml

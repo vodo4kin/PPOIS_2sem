@@ -6,25 +6,25 @@ skinparam dpi 150
 [*] --> NoAccess
 
 state NoAccess {
-  [*] --> Idle : Нет доступа
-  Idle --> Authenticated : Карта техника (16 цифр) + PIN
+    [*] --> Idle : Нет доступа
+    Idle --> Authenticated : Карта техника (16 цифр) + PIN
 }
 
 state Authenticated {
-  Authenticated --> TechMenu : Доступ разрешён
+    Authenticated --> TechMenu : Доступ разрешён
 }
 
 state TechMenu {
-  [*] --> Available
-  Available --> RetrieveCards : 1. Извлечение удержанных карт
-  Available --> Reboot : 2. Перезагрузка
-  RetrieveCards --> Available : Завершено
-  Reboot --> Available : Перезагрузка завершена
+    [*] --> Available
+    Available --> RetrieveCards : 1. Извлечение удержанных карт
+    Available --> Reboot : 2. Перезагрузка
+    RetrieveCards --> Available : Завершено
+    Reboot --> Available : Перезагрузка завершена
 }
 
 state TechnicianEnding {
-  [*] --> Logout : 3. Exit
-  Logout --> NoAccess : Выход
+    [*] --> Logout : 3. Exit
+    Logout --> NoAccess : Выход
 }
 
 TechMenu --> TechnicianEnding : 3. Exit

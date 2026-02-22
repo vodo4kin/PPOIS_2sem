@@ -17,8 +17,8 @@ Technician --> RetrieveCards
 Technician --> Reboot
 
 note right of RetrieveCards
-  Из ловушки удержанных карт
-  (retain bin)
+    Из ловушки удержанных карт
+    (retain bin)
 end note
 
 @enduml

@@ -5,77 +5,77 @@ skinparam dpi 300
 skinparam packageStyle rectangle
 
 package "UserInterfaceModule" {
-  class Display
-  class Keypad
-  class SessionTimer
-  class SoundPlayer
+    class Display
+    class Keypad
+    class SessionTimer
+    class SoundPlayer
 }
 
 package "CardReaderModule" {
-  class CardReader
-  class Card
-  class CardRetainer
+    class CardReader
+    class Card
+    class CardRetainer
 }
 
 package "AuthenticationModule" {
-  class AuthenticationService
-  class PinValidator
-  class CardBlockStatusChecker
+    class AuthenticationService
+    class PinValidator
+    class CardBlockStatusChecker
 }
 
 package "TransactionModule" {
-  abstract class Transaction
-  class TransactionFactory
-  class WithdrawalTransaction
-  class DepositTransaction
-  class BalanceInquiryTransaction
-  class PinChangeTransaction
-  class TransferTransaction
-  class PaymentTransaction
+    abstract class Transaction
+    class TransactionFactory
+    class WithdrawalTransaction
+    class DepositTransaction
+    class BalanceInquiryTransaction
+    class PinChangeTransaction
+    class TransferTransaction
+    class PaymentTransaction
 }
 
 package "CashHandlingModule" {
-  class CashDispenser
-  class CashAcceptor
-  class CashInventory
+    class CashDispenser
+    class CashAcceptor
+    class CashInventory
 }
 
 package "CashManagementModule" {
-  class CashReplenisher
-  class CashCollector
-  class CassetteManager
-  class CashReplenisherAuthenticator
+    class CashReplenisher
+    class CashCollector
+    class CassetteManager
+    class CashReplenisherAuthenticator
 }
 
 package "TechnicianServiceModule" {
-  class RetainedCardCollector
-  class PowerController
-  class RebootController
-  class TechnicianAuthenticator
+    class RetainedCardCollector
+    class PowerController
+    class RebootController
+    class TechnicianAuthenticator
 }
 
 package "BankCommunicationModule" {
-  class BankGateway
-  class MockBankRepository
-  class AccountData
+    class BankGateway
+    class MockBankRepository
+    class AccountData
 }
 
 package "PowerAndHardwareModule" {
-  class PowerManager
+    class PowerManager
 }
 
 package "SessionManager" {
-  class ATMStateMachine
-  class Session
-  class SessionType
-  class State
-  class StateSaver
-  class Logger
+    class ATMStateMachine
+    class Session
+    class SessionType
+    class State
+    class StateSaver
+    class Logger
 }
 
 package "Сквозные" {
-  class ATM
-  class Config
+    class ATM
+    class Config
 }
 
 ' Центральные связи

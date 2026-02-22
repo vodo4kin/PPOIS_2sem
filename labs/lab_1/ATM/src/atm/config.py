@@ -24,6 +24,7 @@ class Config:
     MSG_ENTER_PIN: Final[str] = "Enter PIN: "
     MSG_INVALID_PIN: Final[str] = "Invalid PIN. Attempts left: {}"
     MSG_CARD_BLOCKED: Final[str] = "Card is blocked. Contact your bank."
+    MSG_CARD_ALREADY_RETAINED: Final[str] = "Card already retained. Such thing cannot happen."
     MSG_GOODBYE: Final[str] = "Thank you. Please take your card."
     MSG_TIMEOUT: Final[str] = "Session timed out due to inactivity."
     MSG_INSUFFICIENT_FUNDS: Final[str] = "Insufficient funds."

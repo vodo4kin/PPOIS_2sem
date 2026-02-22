@@ -228,10 +228,20 @@ class ATM:
                 if action == "3":
                     break
                 if action == "1":
-                    cards = self.retained_card_collector.collect_retained()
-                    self.display.show_message(
-                        f"Collected {len(cards)} card(s): {cards}"
-                    )
+                    from_bank = self.bank_gateway.get_retained_card_numbers()
+                    from_bin = self.retained_card_collector.retainer.get_retained_card_numbers()
+                    all_retained = list(dict.fromkeys(from_bank + from_bin))
+                    if not all_retained:
+                        self.display.show_message("No retained cards.")
+                    else:
+                        self.display.show_message(
+                            f"Retained cards ({len(all_retained)}): {', '.join(all_retained)}"
+                        )
+                        self.bank_gateway.collect_retained_cards(all_retained)
+                        self.retained_card_collector.collect_retained()
+                        self.display.show_message(
+                            f"Collected {len(all_retained)} card(s). Unblocked and removed from machine."
+                        )
                 elif action == "2":
                     self.reboot_controller.reboot()
                     self.display.show_message("Reboot completed.")

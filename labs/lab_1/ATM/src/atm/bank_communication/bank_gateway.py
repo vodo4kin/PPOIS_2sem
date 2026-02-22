@@ -1,5 +1,5 @@
 from decimal import Decimal
-from typing import Optional
+from typing import List, Optional
 
 from .mock_bank_repo import MockBankRepository
 from .account_data import AccountData
@@ -52,6 +52,18 @@ class BankGateway:
     def get_account(self, card_number: str) -> Optional[AccountData]:
         """Get account data by card number (e.g. for expiry date)."""
         return self._repo.get_account(card_number)
+
+    def set_card_retained(self, card_number: str, retained: bool) -> bool:
+        """Mark card as retained (seized by ATM) or not."""
+        return self._repo.set_card_retained(card_number, retained)
+
+    def get_retained_card_numbers(self) -> List[str]:
+        """Return card numbers that are currently retained in the machine."""
+        return self._repo.get_retained_card_numbers()
+
+    def collect_retained_cards(self, card_numbers: List[str]) -> None:
+        """Mark cards as not retained and unblock (after technician collects)."""
+        self._repo.collect_retained_cards(card_numbers)
 
     def transfer(
         self, from_card: str, to_card: str, amount: Decimal

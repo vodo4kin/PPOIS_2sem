@@ -91,3 +91,21 @@ class TestMockBankRepository:
         assert repo.get_account("1234") is None
         assert repo.get_account("1234567890123456") is not None
         assert repo.get_account("1234567890123456").balance == Decimal("100")
+
+    def test_set_card_retained_and_get_retained_card_numbers(self):
+        repo = MockBankRepository()
+        assert repo.get_retained_card_numbers() == []
+        assert repo.set_card_retained("1234567890123456", True) is True
+        assert repo.get_account("1234567890123456").is_retained is True
+        assert repo.get_retained_card_numbers() == ["1234567890123456"]
+        repo.set_card_retained("9999999999999999", True)
+        assert set(repo.get_retained_card_numbers()) == {"1234567890123456", "9999999999999999"}
+
+    def test_collect_retained_cards(self):
+        repo = MockBankRepository()
+        repo.set_card_retained("1234567890123456", True)
+        repo.block_card("1234567890123456")
+        repo.collect_retained_cards(["1234567890123456"])
+        acc = repo.get_account("1234567890123456")
+        assert acc.is_retained is False
+        assert acc.is_blocked is False

@@ -71,7 +71,21 @@ class NoCardState(State):
             return
         try:
             account = self.context.atm.bank_gateway.get_account(card_number)
-            expiry = account.expiry_date if account else None
+            if account is None:
+                self.context.atm.display.show_message("Card not found.")
+                return
+            if account.is_retained:
+                self.context.atm.display.show_message(Config.MSG_CARD_ALREADY_RETAINED)
+                return
+            if account.is_blocked:
+                expiry = account.expiry_date
+                card = self.context.atm.card_reader.insert_card(card_number, expiry)
+                if card:
+                    self.context.atm.card_reader.retain_card()
+                    self.context.atm.bank_gateway.set_card_retained(card_number, True)
+                self.context.atm.display.show_message(Config.MSG_CARD_BLOCKED)
+                return
+            expiry = account.expiry_date
             card = self.context.atm.card_reader.insert_card(card_number, expiry)
             if card:
                 self.context.atm.session.start(SessionType.CLIENT, card.number)
@@ -114,6 +128,7 @@ class EnteringPINState(State):
             if self.attempts <= 0:
                 self.context.atm.display.show_message(Config.MSG_CARD_BLOCKED)
                 self.context.atm.card_reader.retain_card()
+                self.context.atm.bank_gateway.set_card_retained(card_num, True)
                 self.context.atm.session.end()
                 self.context.change_state(NoCardState(self.context))
             else:

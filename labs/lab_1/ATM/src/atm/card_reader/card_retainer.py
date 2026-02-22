@@ -15,3 +15,7 @@ class CardRetainer:
 
     def get_retained_count(self) -> int:
         return len(self._retained)
+
+    def get_retained_card_numbers(self) -> List[str]:
+        """Return card numbers currently in the retainer (for technician display)."""
+        return [card.number for card in self._retained]

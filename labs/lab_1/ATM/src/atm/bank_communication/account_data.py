@@ -22,6 +22,9 @@ class AccountData:
     is_blocked: bool = False
     """True if card is blocked."""
 
+    is_retained: bool = False
+    """True if card was seized by ATM and is in the machine (technician can collect)."""
+
     owner_name: Optional[str] = None
     """Optional: cardholder name."""
 

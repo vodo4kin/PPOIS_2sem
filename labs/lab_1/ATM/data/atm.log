@@ -196,3 +196,30 @@
 [2026-02-22 20:01:24] INFO     ATM main loop started
 [2026-02-22 20:01:31] INFO     ATM stopped by user (KeyboardInterrupt)
 [2026-02-22 20:01:31] INFO     ATM session ended
+[2026-02-22 20:17:35] INFO     ATM initialized successfully
+[2026-02-22 20:17:35] INFO     ATM main loop started
+[2026-02-22 20:17:57] INFO     Incassator session started: 1000000000000001
+[2026-02-22 20:18:46] INFO     Technician session started: 1000000000000002
+[2026-02-22 20:22:27] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 20:22:27] INFO     ATM session ended
+[2026-02-22 20:28:16] INFO     ATM initialized successfully
+[2026-02-22 20:28:16] INFO     ATM main loop started
+[2026-02-22 20:28:34] INFO     State changed to: CardInsertedState
+[2026-02-22 20:28:34] INFO     State changed to: EnteringPINState
+[2026-02-22 20:28:37] INFO     State changed to: AuthenticatedState
+[2026-02-22 20:28:47] ERROR    *Beep*
+[2026-02-22 20:28:50] INFO     State changed to: SessionEndingState
+[2026-02-22 20:28:50] INFO     State changed to: NoCardState
+[2026-02-22 20:28:55] INFO     State changed to: CardInsertedState
+[2026-02-22 20:28:55] INFO     State changed to: EnteringPINState
+[2026-02-22 20:28:58] INFO     State changed to: NoCardState
+[2026-02-22 20:29:38] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 20:29:38] INFO     ATM session ended
+[2026-02-22 20:29:39] INFO     ATM initialized successfully
+[2026-02-22 20:29:39] INFO     ATM main loop started
+[2026-02-22 20:29:49] INFO     Technician session started: 1000000000000002
+[2026-02-22 20:30:13] INFO     State changed to: CardInsertedState
+[2026-02-22 20:30:13] INFO     State changed to: EnteringPINState
+[2026-02-22 20:30:14] INFO     State changed to: NoCardState
+[2026-02-22 20:30:43] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 20:30:43] INFO     ATM session ended

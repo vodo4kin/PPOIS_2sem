@@ -14,7 +14,7 @@ class TestAccountData:
 
     def test_expiry_optional(self):
         acc = AccountData(
-            "1234567890123456", "h", Decimal("0"), False, None, "12/28"
+            "1234567890123456", "h", Decimal("0"), False, False, None, "12/28"
         )
         assert acc.expiry_date == "12/28"
 
@@ -34,6 +34,6 @@ class TestAccountData:
 
     def test_owner_name_optional(self):
         acc = AccountData(
-            "1234567890123456", "h", Decimal("0"), False, "John"
+            "1234567890123456", "h", Decimal("0"), False, False, "John"
         )
         assert acc.owner_name == "John"

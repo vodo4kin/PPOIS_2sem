@@ -1,4 +1,4 @@
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 from dataclasses import asdict
 from decimal import Decimal
 import json
@@ -40,6 +40,7 @@ class MockBankRepository:
                         pin_hash=data["pin_hash"],
                         balance=Decimal(data["balance"]),
                         is_blocked=data["is_blocked"],
+                        is_retained=data.get("is_retained", False),
                         owner_name=data.get("owner_name"),
                         expiry_date=data.get("expiry_date"),
                     )
@@ -90,6 +91,7 @@ class MockBankRepository:
             pin_hash=account.pin_hash,
             balance=new_balance,
             is_blocked=account.is_blocked,
+            is_retained=account.is_retained,
             owner_name=account.owner_name,
             expiry_date=account.expiry_date,
         )
@@ -110,12 +112,53 @@ class MockBankRepository:
             pin_hash=account.pin_hash,
             balance=account.balance,
             is_blocked=True,
+            is_retained=account.is_retained,
             owner_name=account.owner_name,
             expiry_date=account.expiry_date,
         )
         self._accounts[card_number] = updated
         self._save_accounts()
         return True
+
+    def set_card_retained(self, card_number: str, retained: bool) -> bool:
+        """Mark card as retained (seized by ATM) or not. Saves to disk."""
+        account = self.get_account(card_number)
+        if account is None:
+            return False
+        updated = AccountData(
+            card_number=account.card_number,
+            pin_hash=account.pin_hash,
+            balance=account.balance,
+            is_blocked=account.is_blocked,
+            is_retained=retained,
+            owner_name=account.owner_name,
+            expiry_date=account.expiry_date,
+        )
+        self._accounts[card_number] = updated
+        self._save_accounts()
+        return True
+
+    def get_retained_card_numbers(self) -> List[str]:
+        """Return list of card numbers that are currently retained (in the machine)."""
+        return [num for num, acc in self._accounts.items() if acc.is_retained]
+
+    def collect_retained_cards(self, card_numbers: List[str]) -> None:
+        """Mark cards as not retained and unblock. Used when technician collects."""
+        for card_number in card_numbers:
+            account = self.get_account(card_number)
+            if account is None:
+                continue
+            updated = AccountData(
+                card_number=account.card_number,
+                pin_hash=account.pin_hash,
+                balance=account.balance,
+                is_blocked=False,
+                is_retained=False,
+                owner_name=account.owner_name,
+                expiry_date=account.expiry_date,
+            )
+            self._accounts[card_number] = updated
+        self._save_accounts()
 
     def validate_pin(self, card_number: str, pin: str) -> bool:
         """
@@ -139,11 +182,11 @@ class MockBankRepository:
         """Create demo accounts when no bank_accounts.json exists. Card numbers are 16 digits."""
         expiry = "12/28"
         demos = [
-            AccountData("1234567890123456", "hashed_pin_0000", Decimal("10000"), False, "Client One", expiry),
-            AccountData("1111111111111111", "hashed_pin_1234", Decimal("5000"), False, "Client Two", expiry),
-            AccountData("9999999999999999", "hashed_pin_0000", Decimal("0"), True, "Blocked Card", expiry),
-            AccountData("1000000000000001", "hashed_pin_1111", Decimal("0"), False, "Incassator", expiry),
-            AccountData("1000000000000002", "hashed_pin_2222", Decimal("0"), False, "Technician", expiry),
+            AccountData("1234567890123456", "hashed_pin_0000", Decimal("10000"), False, False, "Client One", expiry),
+            AccountData("1111111111111111", "hashed_pin_1234", Decimal("5000"), False, False, "Client Two", expiry),
+            AccountData("9999999999999999", "hashed_pin_0000", Decimal("0"), True, False, "Blocked Card", expiry),
+            AccountData("1000000000000001", "hashed_pin_1111", Decimal("0"), False, False, "Incassator", expiry),
+            AccountData("1000000000000002", "hashed_pin_2222", Decimal("0"), False, False, "Technician", expiry),
         ]
         for acc in demos:
             self._accounts[acc.card_number] = acc
@@ -165,6 +208,7 @@ class MockBankRepository:
             pin_hash=new_hash,
             balance=account.balance,
             is_blocked=account.is_blocked,
+            is_retained=account.is_retained,
             owner_name=account.owner_name,
             expiry_date=account.expiry_date,
         )

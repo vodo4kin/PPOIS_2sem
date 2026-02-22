@@ -4,6 +4,7 @@
     "pin_hash": "hashed_pin_5432",
     "balance": "5000",
     "is_blocked": false,
+    "is_retained": true,
     "owner_name": "Client One",
     "expiry_date": "12/28"
   },
@@ -12,6 +13,7 @@
     "pin_hash": "hashed_pin_1234",
     "balance": "5200",
     "is_blocked": false,
+    "is_retained": false,
     "owner_name": "Client Two",
     "expiry_date": "12/28"
   },
@@ -20,6 +22,7 @@
     "pin_hash": "hashed_pin_5555",
     "balance": "0",
     "is_blocked": true,
+    "is_retained": false,
     "owner_name": "Blocked Card",
     "expiry_date": "12/28"
   },
@@ -28,6 +31,7 @@
     "pin_hash": "hashed_pin_1111",
     "balance": "0",
     "is_blocked": false,
+    "is_retained": false,
     "owner_name": "Incassator",
     "expiry_date": "12/28"
   },
@@ -36,6 +40,7 @@
     "pin_hash": "hashed_pin_2222",
     "balance": "0",
     "is_blocked": false,
+    "is_retained": false,
     "owner_name": "Technician",
     "expiry_date": "12/28"
   }

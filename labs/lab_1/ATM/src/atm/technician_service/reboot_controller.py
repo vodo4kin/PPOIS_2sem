@@ -1,5 +1,5 @@
-from session_manager import logger as log
-from power_controller import PowerController
+from .power_controller import PowerController
+from ..session_manager.logger import Logger
 
 
 class RebootController:
@@ -7,7 +7,7 @@ class RebootController:
 
     def __init__(self, power_controller: PowerController) -> None:
         self.power_controller = power_controller
-        self.logger = log.Logger()
+        self.logger = Logger()
 
     def reboot(self) -> None:
         self.power_controller.power_off()

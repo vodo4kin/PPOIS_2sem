@@ -1,0 +1,1 @@
+"""Power and hardware subsystem."""

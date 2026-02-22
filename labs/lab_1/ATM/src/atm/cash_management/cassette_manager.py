@@ -1,12 +1,17 @@
-from session_manager import logger as log
+from typing import TYPE_CHECKING
+
+from ..session_manager.logger import Logger
+
+if TYPE_CHECKING:
+    from ..cash_handling.cash_inventory import CashInventory
 
 
 class CassetteManager:
     """Manages physical cassettes in ATM."""
 
-    def __init__(self, inventory) -> None:
+    def __init__(self, inventory: "CashInventory") -> None:
         self.inventory = inventory
-        self.logger = log.Logger()
+        self.logger = Logger()
 
     def replace_cassette(self, denom: int, new_count: int) -> None:
         """Replace a cassette with new count."""

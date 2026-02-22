@@ -1,17 +1,24 @@
-from typing import Dict
+from typing import Dict, TYPE_CHECKING
 
-from .cash_replenisher_auth import CashReplenisherAuthenticator
-from session_manager import logger as log
 from ..config import Config
+from ..session_manager.logger import Logger
+from .cash_replenisher_auth import CashReplenisherAuthenticator
+
+if TYPE_CHECKING:
+    from ..cash_handling.cash_inventory import CashInventory
 
 
 class CashReplenisher:
     """Handles cash replenishment by incassator."""
 
-    def __init__(self, inventory, authenticator: CashReplenisherAuthenticator) -> None:
+    def __init__(
+        self,
+        inventory: "CashInventory",
+        authenticator: CashReplenisherAuthenticator,
+    ) -> None:
         self.inventory = inventory
         self.authenticator = authenticator
-        self.logger = log.Logger()
+        self.logger = Logger()
 
     def replenish(self, denominations: Dict[int, int], user_id: str, pin: str) -> None:
         """Replenish with authentication."""

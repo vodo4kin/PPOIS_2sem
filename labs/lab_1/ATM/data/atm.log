@@ -1,0 +1,64 @@
+[2026-02-22 17:02:20] INFO     ATM initialized successfully
+[2026-02-22 17:14:26] INFO     ATM initialized successfully
+[2026-02-22 17:14:26] INFO     ATM main loop started
+[2026-02-22 17:15:06] INFO     State changed to: CardInsertedState
+[2026-02-22 17:15:06] INFO     State changed to: EnteringPINState
+[2026-02-22 17:15:08] INFO     State changed to: AuthenticatedState
+[2026-02-22 17:15:18] INFO     State changed to: WithdrawalState
+[2026-02-22 17:15:29] INFO     State changed to: AuthenticatedState
+[2026-02-22 17:22:05] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 17:22:05] INFO     ATM session ended
+[2026-02-22 17:33:02] INFO     ATM initialized successfully
+[2026-02-22 17:33:02] INFO     ATM main loop started
+[2026-02-22 17:33:39] INFO     Incassator session started: 1000000000000001
+[2026-02-22 17:35:48] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 17:35:48] INFO     ATM session ended
+[2026-02-22 17:43:22] INFO     ATM initialized successfully
+[2026-02-22 17:43:22] INFO     ATM main loop started
+[2026-02-22 17:43:29] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 17:43:29] INFO     ATM session ended
+[2026-02-22 17:45:35] INFO     ATM initialized successfully
+[2026-02-22 17:45:35] INFO     ATM main loop started
+[2026-02-22 17:46:01] INFO     State changed to: CardInsertedState
+[2026-02-22 17:46:01] INFO     State changed to: EnteringPINState
+[2026-02-22 17:46:04] INFO     State changed to: AuthenticatedState
+[2026-02-22 17:46:07] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-22 17:46:07] INFO     *Beep*
+[2026-02-22 17:46:28] INFO     State changed to: WithdrawalState
+[2026-02-22 17:47:06] INFO     *Beep*
+[2026-02-22 17:47:13] INFO     State changed to: AuthenticatedState
+[2026-02-22 17:47:14] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-22 17:47:14] INFO     *Beep*
+[2026-02-22 17:47:52] INFO     DepositTransaction - SUCCESS
+[2026-02-22 17:47:52] INFO     *Beep*
+[2026-02-22 17:48:09] INFO     DepositTransaction - SUCCESS
+[2026-02-22 17:48:09] INFO     *Beep*
+[2026-02-22 17:48:12] INFO     State changed to: WithdrawalState
+[2026-02-22 17:48:17] INFO     *Beep*
+[2026-02-22 17:48:18] INFO     State changed to: AuthenticatedState
+[2026-02-22 17:48:36] ERROR    *Beep*
+[2026-02-22 17:48:49] INFO     PinChangeTransaction - SUCCESS
+[2026-02-22 17:48:49] INFO     *Beep*
+[2026-02-22 17:49:16] INFO     TransferTransaction - SUCCESS amount=200
+[2026-02-22 17:49:16] INFO     *Beep*
+[2026-02-22 17:49:38] INFO     PaymentTransaction - SUCCESS amount=5000
+[2026-02-22 17:49:38] INFO     *Beep*
+[2026-02-22 17:49:50] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-22 17:49:50] INFO     *Beep*
+[2026-02-22 17:49:53] INFO     State changed to: SessionEndingState
+[2026-02-22 17:49:53] INFO     State changed to: NoCardState
+[2026-02-22 17:50:15] INFO     State changed to: CardInsertedState
+[2026-02-22 17:50:15] INFO     State changed to: EnteringPINState
+[2026-02-22 17:50:21] INFO     State changed to: AuthenticatedState
+[2026-02-22 17:50:37] INFO     State changed to: SessionEndingState
+[2026-02-22 17:50:37] INFO     State changed to: NoCardState
+[2026-02-22 17:50:49] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 17:50:49] INFO     ATM session ended
+[2026-02-22 17:51:22] INFO     ATM initialized successfully
+[2026-02-22 17:51:22] INFO     ATM main loop started
+[2026-02-22 17:51:47] INFO     Incassator session started: 1000000000000001
+[2026-02-22 17:53:06] INFO     Technician session started: 1000000000000002
+[2026-02-22 17:53:33] INFO     ATM session ended
+[2026-02-22 18:32:53] INFO     ATM initialized successfully
+[2026-02-22 18:32:53] INFO     ATM main loop started
+[2026-02-22 18:32:55] INFO     ATM session ended

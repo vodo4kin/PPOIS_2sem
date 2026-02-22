@@ -1,6 +1,6 @@
-from decimal import Decimal
 from typing import TYPE_CHECKING
-from config import Config
+
+from ..config import Config
 from .transaction import Transaction
 
 if TYPE_CHECKING:

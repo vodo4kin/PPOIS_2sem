@@ -1,8 +1,8 @@
 from typing import Dict
 
+from ..config import Config
+from ..session_manager.logger import Logger
 from .cash_inventory import CashInventory
-from session_manager import logger as log
-from config import Config as conf
 
 
 class CashDispenser:
@@ -10,7 +10,7 @@ class CashDispenser:
 
     def __init__(self, inventory: CashInventory) -> None:
         self.inventory = inventory
-        self.logger = log.Logger()  # или передавать из ATM
+        self.logger = Logger()
 
     def dispense(self, amount: int) -> None:
         """Dispense the requested amount."""
@@ -22,7 +22,6 @@ class CashDispenser:
         log_msg = f"Dispensed: {amount}. Breakdown: {dispensed}"
         self.logger.info(log_msg)
 
-        # Здесь можно добавить симуляцию физической выдачи (print, sleep и т.д.)
         print("Dispensing cash...")
         for denom, count in dispensed.items():
-            print(f"  {count} × {denom} {conf.DEFAULT_CURRENCY}")
+            print(f"  {count} × {denom} {Config.DEFAULT_CURRENCY}")

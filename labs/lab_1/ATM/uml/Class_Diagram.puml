@@ -15,7 +15,6 @@ package "CardReaderModule" {
   class CardReader
   class Card
   class CardRetainer
-  class CardStatusChecker
 }
 
 package "AuthenticationModule" {
@@ -39,12 +38,6 @@ package "CashHandlingModule" {
   class CashDispenser
   class CashAcceptor
   class CashInventory
-}
-
-package "ReceiptPrinterModule" {
-  class ReceiptPrinter
-  class ReceiptTemplate
-  class PaperSensor
 }
 
 package "CashManagementModule" {
@@ -82,18 +75,29 @@ package "SessionManager" {
 
 package "Сквозные" {
   class ATM
-  class Configuration
-  class PersistenceManager
+  class Config
 }
 
 ' Центральные связи
+ATM *-- Logger
 ATM *-- AuthenticationService
-ATM *-- TransactionFactory
 ATM *-- ATMStateMachine
 ATM *-- Session
 ATM *-- BankGateway
+ATM *-- CardReader
+ATM *-- Display
+ATM *-- Keypad
+ATM *-- SessionTimer
+ATM *-- SoundPlayer
 ATM *-- CashInventory
-ATM *-- PowerManager
+ATM *-- CashDispenser
+ATM *-- CashAcceptor
+ATM *-- CashReplenisher
+ATM *-- CashCollector
+ATM *-- CassetteManager
+ATM *-- PowerController
+ATM *-- RebootController
+ATM *-- RetainedCardCollector
 
 ' Транзакции
 TransactionFactory ..> Transaction : создаёт
@@ -120,24 +124,20 @@ CashReplenisher ..> CashInventory : увеличивает (пополнение
 CashCollector ..> CashInventory : уменьшает (изъятие)
 CassetteManager ..> CashInventory : управляет кассетами
 
-' Печать
-ReceiptPrinter ..> ReceiptTemplate
-ReceiptPrinter ..> PaperSensor
-
 ' Инкассатор и техник
-CashReplenisherAuthenticator ..> CashReplenisher : авторизует операции
-TechnicianAuthenticator ..> RetainedCardCollector
-TechnicianAuthenticator ..> PowerController
-TechnicianAuthenticator ..> RebootController
+CashReplenisherAuthenticator ..> AuthenticationService : авторизация
+TechnicianAuthenticator ..> AuthenticationService : авторизация
+
+' Банк
+BankGateway *-- MockBankRepository
+MockBankRepository ..> AccountData : хранит
 
 ' Состояния и сессии
 ATMStateMachine *-- State
 Session *-- SessionType
-PersistenceManager ..> ATMStateMachine : сохраняет
-PersistenceManager ..> CashInventory : сохраняет
+CashInventory ..> StateSaver : сохранение состояния кассет
 
-' Настройки и логи
-Configuration ..> ATM : предоставляет
-Logger ..> ATM : логирует
+' Настройки
+Config ..> ATM : конфигурация
 
 @enduml

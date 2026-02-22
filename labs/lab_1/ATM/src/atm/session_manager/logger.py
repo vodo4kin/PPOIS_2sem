@@ -1,5 +1,5 @@
 import datetime
-from typing import Optional
+from typing import Optional, TextIO
 
 
 class Logger:
@@ -7,7 +7,7 @@ class Logger:
 
     def __init__(self, log_file: Optional[str] = None) -> None:
         self.log_file = log_file
-        self._file_handle = None
+        self._file_handle: Optional[TextIO] = None
         if self.log_file:
             self._file_handle = open(self.log_file, "a", encoding="utf-8")
 

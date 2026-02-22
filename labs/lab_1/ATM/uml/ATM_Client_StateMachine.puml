@@ -10,8 +10,7 @@ state NoCard {
 }
 
 state CardInserted {
-  [*] --> CardIn : Карта вставлена
-  CardIn --> PIN_Entry : Начало ввода PIN
+  [*] --> CardIn : Карта вставлена (16 цифр)
 }
 
 state PIN_Entry {
@@ -24,19 +23,18 @@ state PIN_Entry {
 
 state Authenticated {
   [*] --> Menu : Меню операций
-  Menu --> Transaction : Выбор операции
-  Transaction --> Menu : Операция завершена
-  Menu --> PrintCheckQuestion : Запрос "Печатать чек?"
-}
-
-state PrintCheckQuestion {
-  PrintCheckQuestion --> PrintingCheck : Да
-  PrintCheckQuestion --> Menu : Нет
-}
-
-state PrintingCheck {
-  [*] --> Print : Печать чека
-  Print --> Menu : Завершено
+  Menu --> CheckBalance : 1. Check Balance
+  Menu --> Withdraw : 2. Withdraw
+  Menu --> Deposit : 3. Deposit
+  Menu --> Transfer : 4. Transfer
+  Menu --> Payment : 5. Payment
+  Menu --> PinChange : 6. Pin Change
+  CheckBalance --> Menu : результат + Enter
+  Withdraw --> Menu : результат + Enter
+  Deposit --> Menu : результат + Enter
+  Transfer --> Menu : результат + Enter
+  Payment --> Menu : результат + Enter
+  PinChange --> Menu : результат + Enter
 }
 
 state SessionEnding {
@@ -47,20 +45,25 @@ state SessionEnding {
 state CardRetainedBlocked {
   [*] --> Retained : Карта изъята
   Retained --> Blocked : Карта заблокирована
-  Blocked --> NoCard : После сообщения / таймаут
+  Blocked --> NoCard : После сообщения
 }
 
-NoCard --> CardInserted : Вставка карты
-Authenticated --> SessionEnding : Таймаут / Явный выход / Завершение
-Transaction --> SessionEnding : Завершение операции
-PrintCheckQuestion --> SessionEnding : Завершение
+NoCard --> CardInserted : Вставка карты (16 цифр)
+CardInserted --> PIN_Entry : Ввод PIN
+Authenticated --> SessionEnding : 7. Exit / Таймаут
+Menu --> SessionEnding : 7. Exit
 
 note right of PIN_Entry
-  Проверка через банк
+  Проверка через BankGateway
 end note
 
 note right of CardRetainedBlocked
-  Блокировка + изъятие карты
+  Блокировка в банке + изъятие карты
+end note
+
+note right of Authenticated
+  После каждой операции:
+  результат на экран, *Beep* в лог, Enter
 end note
 
 @enduml

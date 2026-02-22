@@ -39,7 +39,6 @@ class WithdrawalTransaction(Transaction):
             self.error_message = "Insufficient funds or withdrawal failed"
             return False
 
-        # Пытаемся выдать наличные
         try:
             self.atm.cash_dispenser.dispense(int(self.amount))
             self.atm.display.show_message(
@@ -48,7 +47,6 @@ class WithdrawalTransaction(Transaction):
             self.log_transaction()
             return True
         except ValueError as e:
-            # Откатываем списание (в реальности — сложнее)
             self.atm.bank_gateway.deposit(card.number, self.amount)
             self.error_message = str(e)
             self.atm.display.show_message(

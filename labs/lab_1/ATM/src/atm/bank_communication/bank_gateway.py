@@ -48,3 +48,13 @@ class BankGateway:
     def change_pin(self, card_number: str, new_pin: str) -> bool:
         """Change PIN via bank repository."""
         return self._repo.change_pin(card_number, new_pin)
+
+    def get_account(self, card_number: str) -> Optional[AccountData]:
+        """Get account data by card number (e.g. for expiry date)."""
+        return self._repo.get_account(card_number)
+
+    def transfer(
+        self, from_card: str, to_card: str, amount: Decimal
+    ) -> bool:
+        """Transfer amount from one account to another."""
+        return self._repo.transfer(from_card, to_card, amount)

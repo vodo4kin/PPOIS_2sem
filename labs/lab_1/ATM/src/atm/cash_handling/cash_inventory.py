@@ -1,8 +1,8 @@
-from typing import Dict
-from pathlib import Path
 import json
+from pathlib import Path
+from typing import Dict
 
-from config import Config
+from ..config import Config
 from ..session_manager.state_saver import StateSaver
 
 

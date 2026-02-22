@@ -1,4 +1,4 @@
-from session_manager import logger as log
+from ..session_manager.logger import Logger
 
 
 class PowerController:
@@ -6,7 +6,7 @@ class PowerController:
 
     def __init__(self) -> None:
         self.is_on = True
-        self.logger = log.Logger()
+        self.logger = Logger()
 
     def power_off(self) -> None:
         self.is_on = False

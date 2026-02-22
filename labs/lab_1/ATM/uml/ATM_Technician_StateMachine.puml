@@ -7,7 +7,7 @@ skinparam dpi 150
 
 state NoAccess {
   [*] --> Idle : Нет доступа
-  Idle --> Authenticated : Вставка служебной карты + ввод PIN
+  Idle --> Authenticated : Карта техника (16 цифр) + PIN
 }
 
 state Authenticated {
@@ -16,29 +16,26 @@ state Authenticated {
 
 state TechMenu {
   [*] --> Available
-  Available --> RetrieveCards : Извлечение удержанных карт
-  Available --> PowerControl : Включение/выключение
-  Available --> Diagnostics : Диагностика и ремонт
-  Available --> Reboot : Перезагрузка
+  Available --> RetrieveCards : 1. Извлечение удержанных карт
+  Available --> Reboot : 2. Перезагрузка
   RetrieveCards --> Available : Завершено
-  PowerControl --> Available : Завершено
-  Diagnostics --> Available : Завершено
   Reboot --> Available : Перезагрузка завершена
 }
 
 state TechnicianEnding {
-  [*] --> Logout : Выход из режима (извлечение карты / выход)
-  Logout --> NoAccess : Доступ закрыт
+  [*] --> Logout : 3. Exit
+  Logout --> NoAccess : Выход
 }
 
-TechMenu --> TechnicianEnding : Завершение работы
+TechMenu --> TechnicianEnding : 3. Exit
 
 note right of Authenticated
-  Служебная карта + PIN
+  В реализации: карта 1000000000000002, PIN 2222
 end note
 
 note right of TechMenu
-  Все операции локальные
+  В реализации: только извлечение карт
+  и перезагрузка (без вкл/выкл и диагностики)
 end note
 
 @enduml

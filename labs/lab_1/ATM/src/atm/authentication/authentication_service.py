@@ -13,7 +13,7 @@ class AuthenticationService:
         self._gateway = bank_gateway
         self._pin_validator = PinValidator()
         self._block_checker = CardBlockStatusChecker(bank_gateway)
-        self._attempts_left: dict[str, int] = {}  # card_number -> attempts
+        self._attempts_left: dict[str, int] = {}
 
     def authenticate(self, card_number: str, pin: str) -> bool:
         """Try to authenticate user with PIN."""

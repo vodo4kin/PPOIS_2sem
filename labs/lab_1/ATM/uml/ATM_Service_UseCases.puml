@@ -11,11 +11,11 @@ rectangle "Модель банкомата" {
 
     usecase "Пополнение наличными" as Replenish
     usecase "Изъятие наличных" as Collect
-    usecase "Замена чековой ленты" as ReplacePaper
+    usecase "Замена кассеты" as ReplaceCassette
 }
 
 CashCollector --> Replenish
 CashCollector --> Collect
-CashCollector --> ReplacePaper
+CashCollector --> ReplaceCassette
 
 @enduml

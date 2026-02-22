@@ -3,41 +3,41 @@ skinparam monochrome true
 skinparam shadowing false
 skinparam dpi 150
 
-[*] --> NoKey
+[*] --> NoAccess
 
-state NoKey {
-  [*] --> Idle : Нет ключа
-  Idle --> KeyInserted : Вставка ключа
+state NoAccess {
+  [*] --> Idle : Нет доступа
+  Idle --> CardAndPIN : Карта инкассатора (16 цифр) + PIN
 }
 
-state KeyInserted {
-  KeyInserted --> ServiceMenu : Доступ разрешён
+state CardAndPIN {
+  CardAndPIN --> ServiceMenu : Аутентификация успешна
 }
 
 state ServiceMenu {
   [*] --> Available
-  Available --> Replenish : Пополнение наличными
-  Available --> Collect : Изъятие наличных
-  Available --> ReplacePaper : Замена чековой ленты
+  Available --> Replenish : 1. Пополнение наличными
+  Available --> Collect : 2. Изъятие наличных
+  Available --> ReplaceCassette : 3. Замена кассеты
   Replenish --> Available : Завершено
   Collect --> Available : Завершено
-  ReplacePaper --> Available : Завершено
+  ReplaceCassette --> Available : Завершено
 }
 
 state ServiceEnding {
-  [*] --> CloseCassettes : Закрытие кассет
-  CloseCassettes --> RemoveKey : Извлечение ключа
-  RemoveKey --> NoKey : Ключ извлечён
+  [*] --> Logout : 4. Exit
+  Logout --> NoAccess : Выход
 }
 
-ServiceMenu --> ServiceEnding : Завершение обслуживания
+ServiceMenu --> ServiceEnding : 4. Exit
 
-note right of KeyInserted
-  Физический ключ в замок
+note right of CardAndPIN
+  В реализации: карта 1000000000000001, PIN 1111
 end note
 
 note right of ServiceMenu
-  Все операции локальные
+  Операции с CashInventory,
+  сохранение в atm_state.json
 end note
 
 @enduml

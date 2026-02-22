@@ -1,7 +1,6 @@
 from decimal import Decimal
 from typing import TYPE_CHECKING, Dict
 
-from ..cash_handling import cash_acceptor
 from .transaction import Transaction
 from ..config import Config
 from ..atm import ATM
@@ -15,7 +14,6 @@ class DepositTransaction(Transaction):
 
     def execute(self) -> bool:
         self.atm.display.show_message("Please insert cash into acceptor.")
-        # Симуляция ввода купюр пользователем (в реальности — аппаратный ввод)
         try:
             input_str = self.atm.keypad.read_input(
                 "Enter denominations as '100:3 50:2' or empty to cancel: "
@@ -48,7 +46,6 @@ class DepositTransaction(Transaction):
                 self.log_transaction()
                 return True
             else:
-                # Откат (возвращаем купюры пользователю — симуляция)
                 self.atm.display.show_message("Deposit failed. Cash returned.")
                 return False
 

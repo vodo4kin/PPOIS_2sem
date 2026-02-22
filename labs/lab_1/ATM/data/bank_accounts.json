@@ -1,0 +1,42 @@
+{
+  "1234567890123456": {
+    "card_number": "1234567890123456",
+    "pin_hash": "hashed_pin_5432",
+    "balance": "5000",
+    "is_blocked": false,
+    "owner_name": "Client One",
+    "expiry_date": "12/28"
+  },
+  "1111111111111111": {
+    "card_number": "1111111111111111",
+    "pin_hash": "hashed_pin_1234",
+    "balance": "5200",
+    "is_blocked": false,
+    "owner_name": "Client Two",
+    "expiry_date": "12/28"
+  },
+  "9999999999999999": {
+    "card_number": "9999999999999999",
+    "pin_hash": "hashed_pin_0000",
+    "balance": "0",
+    "is_blocked": true,
+    "owner_name": "Blocked Card",
+    "expiry_date": "12/28"
+  },
+  "1000000000000001": {
+    "card_number": "1000000000000001",
+    "pin_hash": "hashed_pin_1111",
+    "balance": "0",
+    "is_blocked": false,
+    "owner_name": "Incassator",
+    "expiry_date": "12/28"
+  },
+  "1000000000000002": {
+    "card_number": "1000000000000002",
+    "pin_hash": "hashed_pin_2222",
+    "balance": "0",
+    "is_blocked": false,
+    "owner_name": "Technician",
+    "expiry_date": "12/28"
+  }
+}

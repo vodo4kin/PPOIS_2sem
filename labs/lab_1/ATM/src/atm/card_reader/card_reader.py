@@ -11,12 +11,14 @@ class CardReader:
         self._current_card: Optional[Card] = None
         self._retainer = CardRetainer()
 
-    def insert_card(self, card_number: str) -> Optional[Card]:
-        """Simulate card insertion."""
+    def insert_card(
+        self, card_number: str, expiry_date: Optional[str] = None
+    ) -> Optional[Card]:
+        """Simulate card insertion. Card number must be exactly 16 digits."""
         if self._current_card is not None:
             raise RuntimeError("Another card is already inserted")
         try:
-            card = Card(number=card_number)
+            card = Card(number=card_number, expiry_date=expiry_date)
             self._current_card = card
             return card
         except ValueError as e:
@@ -34,3 +36,6 @@ class CardReader:
 
     def get_current_card(self) -> Optional[Card]:
         return self._current_card
+
+    def get_retainer(self) -> CardRetainer:
+        return self._retainer

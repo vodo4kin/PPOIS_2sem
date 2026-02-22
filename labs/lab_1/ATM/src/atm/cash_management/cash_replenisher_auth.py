@@ -9,4 +9,4 @@ class CashReplenisherAuthenticator:
 
     def authenticate(self, user_id: str, pin: str) -> bool:
         """Authenticate incassator (simulated with client auth)."""
-        return self.auth_service.authenticate(user_id, pin)  # Можно сделать отдельный тип
+        return self.auth_service.authenticate(user_id, pin)

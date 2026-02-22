@@ -15,9 +15,12 @@ class MockBankRepository:
     """
 
     def __init__(self) -> None:
-        Config.ensure_data_dir()  # создаём папку data/, если её нет
+        Config.ensure_data_dir()
         self.file_path: Path = Config.BANK_ACCOUNTS_FILE
-        self._accounts: Dict[str, AccountData] = self._load_accounts()
+        self._accounts = self._load_accounts()
+        if not self._accounts:
+            self._seed_demo_accounts()
+            self._save_accounts()
 
     def _load_accounts(self) -> Dict[str, AccountData]:
         """
@@ -31,13 +34,18 @@ class MockBankRepository:
                 raw_data = json.load(f)
             accounts: Dict[str, AccountData] = {}
             for card_num, data in raw_data.items():
-                accounts[card_num] = AccountData(
-                    card_number=data["card_number"],
-                    pin_hash=data["pin_hash"],
-                    balance=Decimal(data["balance"]),
-                    is_blocked=data["is_blocked"],
-                    owner_name=data.get("owner_name")
-                )
+                try:
+                    acc = AccountData(
+                        card_number=data["card_number"],
+                        pin_hash=data["pin_hash"],
+                        balance=Decimal(data["balance"]),
+                        is_blocked=data["is_blocked"],
+                        owner_name=data.get("owner_name"),
+                        expiry_date=data.get("expiry_date"),
+                    )
+                    accounts[card_num] = acc
+                except (ValueError, KeyError):
+                    continue
             return accounts
         except (json.JSONDecodeError, KeyError, ValueError) as e:
             raise RuntimeError(
@@ -54,8 +62,7 @@ class MockBankRepository:
         raw_data: Dict[str, dict] = {}
         for card_num, account in self._accounts.items():
             raw_data[card_num] = asdict(account)
-            raw_data[card_num]["balance"] = str(
-                raw_data[card_num]["balance"])  # Decimal → str
+            raw_data[card_num]["balance"] = str(raw_data[card_num]["balance"])
         try:
             with open(self.file_path, "w", encoding="utf-8") as f:
                 json.dump(raw_data, f, ensure_ascii=False, indent=2)
@@ -83,7 +90,8 @@ class MockBankRepository:
             pin_hash=account.pin_hash,
             balance=new_balance,
             is_blocked=account.is_blocked,
-            owner_name=account.owner_name
+            owner_name=account.owner_name,
+            expiry_date=account.expiry_date,
         )
         self._accounts[card_number] = updated
         self._save_accounts()
@@ -102,7 +110,8 @@ class MockBankRepository:
             pin_hash=account.pin_hash,
             balance=account.balance,
             is_blocked=True,
-            owner_name=account.owner_name
+            owner_name=account.owner_name,
+            expiry_date=account.expiry_date,
         )
         self._accounts[card_number] = updated
         self._save_accounts()
@@ -126,6 +135,19 @@ class MockBankRepository:
         self._accounts[account.card_number] = account
         self._save_accounts()
 
+    def _seed_demo_accounts(self) -> None:
+        """Create demo accounts when no bank_accounts.json exists. Card numbers are 16 digits."""
+        expiry = "12/28"
+        demos = [
+            AccountData("1234567890123456", "hashed_pin_0000", Decimal("10000"), False, "Client One", expiry),
+            AccountData("1111111111111111", "hashed_pin_1234", Decimal("5000"), False, "Client Two", expiry),
+            AccountData("9999999999999999", "hashed_pin_0000", Decimal("0"), True, "Blocked Card", expiry),
+            AccountData("1000000000000001", "hashed_pin_1111", Decimal("0"), False, "Incassator", expiry),
+            AccountData("1000000000000002", "hashed_pin_2222", Decimal("0"), False, "Technician", expiry),
+        ]
+        for acc in demos:
+            self._accounts[acc.card_number] = acc
+
     def get_all_accounts(self) -> Dict[str, AccountData]:
         """
         Return a copy of all accounts (for debugging or admin purposes).
@@ -143,8 +165,23 @@ class MockBankRepository:
             pin_hash=new_hash,
             balance=account.balance,
             is_blocked=account.is_blocked,
-            owner_name=account.owner_name
+            owner_name=account.owner_name,
+            expiry_date=account.expiry_date,
         )
         self._accounts[card_number] = updated
         self._save_accounts()
+        return True
+
+    def transfer(
+        self, from_card: str, to_card: str, amount: Decimal
+    ) -> bool:
+        """Transfer amount from one card to another. Saves to disk."""
+        from_acc = self.get_account(from_card)
+        to_acc = self.get_account(to_card)
+        if from_acc is None or to_acc is None or from_acc.is_blocked or to_acc.is_blocked:
+            return False
+        if from_acc.balance < amount or amount <= 0:
+            return False
+        self.update_balance(from_card, from_acc.balance - amount)
+        self.update_balance(to_card, to_acc.balance + amount)
         return True

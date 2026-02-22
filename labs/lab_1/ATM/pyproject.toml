@@ -1,0 +1,18 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["src/atm"]
+omit = [
+    "src/atm/main.py",
+    "*/__init__.py",
+    "*card_status_checker*",
+    "src/atm/atm.py",
+    "src/atm/session_manager/atm_state_machine.py",
+]
+
+[tool.coverage.report]
+fail_under = 87
+show_missing = true
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "raise NotImplementedError"]

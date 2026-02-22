@@ -1,8 +1,8 @@
 from typing import Dict
 
 from ..config import Config
+from ..session_manager.logger import Logger
 from .cash_inventory import CashInventory
-from session_manager import logger
 
 
 class CashAcceptor:
@@ -10,7 +10,7 @@ class CashAcceptor:
 
     def __init__(self, inventory: CashInventory) -> None:
         self.inventory = inventory
-        self.logger = logger.Logger()
+        self.logger = Logger()
 
     def accept(self, denominations: Dict[int, int]) -> int:
         """
@@ -23,7 +23,6 @@ class CashAcceptor:
                 raise ValueError(f"Unsupported denomination: {denom}")
             if count < 0:
                 raise ValueError("Count cannot be negative")
-            # прямой доступ (в реальности — метод add)
             self.inventory._cassettes[denom] += count
             total += denom * count
 

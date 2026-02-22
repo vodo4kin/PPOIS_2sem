@@ -10,7 +10,7 @@ class Session:
 
     def __init__(self) -> None:
         self.session_type: Optional[SessionType] = None
-        self.user_id: Optional[str] = None      # card number for client
+        self.user_id: Optional[str] = None
         self.start_time: Optional[datetime.datetime] = None
         self.is_active: bool = False
 

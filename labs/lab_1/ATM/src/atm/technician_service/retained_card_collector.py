@@ -1,7 +1,7 @@
 from typing import List
 
 from ..card_reader.card_retainer import CardRetainer
-from session_manager import logger as log
+from ..session_manager.logger import Logger
 
 
 class RetainedCardCollector:
@@ -9,7 +9,7 @@ class RetainedCardCollector:
 
     def __init__(self, retainer: CardRetainer) -> None:
         self.retainer = retainer
-        self.logger = log.Logger()
+        self.logger = Logger()
 
     def collect_retained(self) -> List[str]:
         """Get list of retained card numbers and clear bin."""

@@ -8,8 +8,9 @@ class Card:
 
     number: str
     owner: Optional[str] = None
-    expiry_date: Optional[str] = None  # format: MM/YY
+    expiry_date: Optional[str] = None
 
     def __post_init__(self) -> None:
-        if not self.number or len(self.number.replace("-", "")) != 16:
-            raise ValueError("Invalid card number format")
+        cleaned = self.number.replace("-", "").replace(" ", "")
+        if len(cleaned) != 16 or not cleaned.isdigit():
+            raise ValueError("Card number must be exactly 16 digits")

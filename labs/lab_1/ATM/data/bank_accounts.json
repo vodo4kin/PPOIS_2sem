@@ -17,7 +17,7 @@
   },
   "9999999999999999": {
     "card_number": "9999999999999999",
-    "pin_hash": "hashed_pin_0000",
+    "pin_hash": "hashed_pin_5555",
     "balance": "0",
     "is_blocked": true,
     "owner_name": "Blocked Card",

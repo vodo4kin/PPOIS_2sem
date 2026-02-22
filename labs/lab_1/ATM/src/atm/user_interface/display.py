@@ -26,5 +26,14 @@ class Display:
         choice = input("Enter your choice: ").strip()
         return choice
 
+    def show_menu_options_only(self, options: List[str]) -> None:  # pragma: no cover
+        """Display menu options without reading choice (caller reads with timeout)."""
+        self.clear()
+        print("ATM Menu".center(40))
+        print("-" * 40)
+        for opt in options:
+            print(opt)
+        print("-" * 40)
+
     def ask_input(self, prompt: str) -> str:
         return input(prompt).strip()

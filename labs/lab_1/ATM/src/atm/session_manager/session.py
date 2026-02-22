@@ -24,7 +24,7 @@ class Session:
 
     def end(self) -> None:
         if not self.is_active:
-            raise RuntimeError("No active session")
+            return
         self.session_type = None
         self.user_id = None
         self.start_time = None

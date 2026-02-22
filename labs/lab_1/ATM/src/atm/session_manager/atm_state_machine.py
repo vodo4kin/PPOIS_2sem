@@ -46,22 +46,25 @@ def _normalize_card_number(raw: str) -> str:
     return cleaned
 
 
-def _beep_and_wait(atm: "ATM", success: bool) -> None:
-    """Beep (success or error) and wait for Enter."""
+def _beep_and_wait(atm: "ATM", success: bool) -> bool:
+    """Beep (success or error) and wait for Enter. Returns False if timeout."""
     if success:
         atm.sound_player.beep_success()
     else:
         atm.sound_player.beep_error()
-    atm.keypad.read_input(Config.MSG_PRESS_ENTER)
+    if atm.read_line_with_timeout(Config.MSG_PRESS_ENTER) is None:
+        return False
+    atm.reset_timer()
+    return True
 
 
 class NoCardState(State):
-    """Initial state — no card inserted."""
+    """Initial state — no card inserted. No inactivity timeout here; only from PIN onward."""
 
     def handle(self) -> None:
-        card_number = _normalize_card_number(
-            self.context.atm.display.ask_input(Config.MSG_INSERT_CARD)
-        )
+        raw = self.context.atm.display.ask_input(Config.MSG_INSERT_CARD)
+        card_number = _normalize_card_number(raw)
+        self.context.atm.reset_timer()
         if not card_number:
             self.context.atm.display.show_message(
                 "Invalid card number. Must be exactly 16 digits.")
@@ -96,7 +99,11 @@ class EnteringPINState(State):
         self.attempts: int = Config.MAX_PIN_ATTEMPTS
 
     def handle(self) -> None:
-        pin = self.context.atm.keypad.read_pin()
+        pin = self.context.atm.read_line_with_timeout("Enter PIN (4 digits): ")
+        if pin is None:
+            return
+        pin = pin.strip()
+        self.context.atm.reset_timer()
         card_num = self.context.atm.card_reader.get_current_card().number
 
         if self.context.atm.auth_service.authenticate(card_num, pin):
@@ -133,7 +140,12 @@ class AuthenticatedState(State):
             "6. Pin Change",
             "7. Exit",
         ]
-        choice = self.context.atm.display.show_menu(options)
+        self.context.atm.display.show_menu_options_only(options)
+        choice = self.context.atm.read_line_with_timeout("Enter your choice: ")
+        if choice is None:
+            return
+        choice = choice.strip()
+        self.context.atm.reset_timer()
         atm = self.context.atm
 
         if choice == "1":
@@ -144,7 +156,9 @@ class AuthenticatedState(State):
             else:
                 atm.display.show_message(t.get_result_message())
                 atm.sound_player.beep_error()
-            atm.keypad.read_input(Config.MSG_PRESS_ENTER)
+            if atm.read_line_with_timeout(Config.MSG_PRESS_ENTER) is None:
+                return
+            atm.reset_timer()
 
         elif choice == "2":
             self.context.change_state(WithdrawalState(self.context))
@@ -154,12 +168,19 @@ class AuthenticatedState(State):
             ok = t.execute()
             if not ok and t.error_message:
                 atm.display.show_message(t.get_result_message())
-            _beep_and_wait(atm, ok)
+            if not _beep_and_wait(atm, ok):
+                return
 
         elif choice == "4":
-            to_card = atm.keypad.read_input(
-                "Enter recipient card number (16 digits): ").strip()
-            amount_str = atm.keypad.read_input("Enter amount: ").strip()
+            to_card = atm.read_line_with_timeout(
+                "Enter recipient card number (16 digits): ")
+            if to_card is None:
+                return
+            to_card = to_card.strip()
+            amount_str = atm.read_line_with_timeout("Enter amount: ")
+            if amount_str is None:
+                return
+            amount_str = amount_str.strip()
             try:
                 amount = Decimal(amount_str)
                 t = TransferTransaction(atm, amount, to_card)
@@ -169,14 +190,22 @@ class AuthenticatedState(State):
                     atm.display.show_message(msg)
                 else:
                     atm.display.show_message("Transfer successful.")
-                _beep_and_wait(atm, ok)
+                if not _beep_and_wait(atm, ok):
+                    return
             except Exception:
                 atm.display.show_message("Invalid amount.")
-                _beep_and_wait(atm, False)
+                if not _beep_and_wait(atm, False):
+                    return
 
         elif choice == "5":
-            service = atm.keypad.read_input("Enter service name: ").strip()
-            amount_str = atm.keypad.read_input("Enter amount: ").strip()
+            service = atm.read_line_with_timeout("Enter service name: ")
+            if service is None:
+                return
+            service = service.strip()
+            amount_str = atm.read_line_with_timeout("Enter amount: ")
+            if amount_str is None:
+                return
+            amount_str = amount_str.strip()
             try:
                 amount = Decimal(amount_str)
                 t = PaymentTransaction(atm, amount, service)
@@ -187,32 +216,41 @@ class AuthenticatedState(State):
                 else:
                     atm.display.show_message(
                         f"Payment successful. {service}: {amount} {Config.DEFAULT_CURRENCY}")
-                _beep_and_wait(atm, ok)
+                if not _beep_and_wait(atm, ok):
+                    return
             except Exception:
                 atm.display.show_message("Invalid amount.")
-                _beep_and_wait(atm, False)
+                if not _beep_and_wait(atm, False):
+                    return
 
         elif choice == "6":
             t = PinChangeTransaction(atm)
             ok = t.execute()
             if not ok and t.error_message:
                 atm.display.show_message(t.get_result_message())
-            _beep_and_wait(atm, ok)
+            if not _beep_and_wait(atm, ok):
+                return
 
         elif choice == "7":
             self.context.change_state(SessionEndingState(self.context))
 
         else:
             atm.display.show_message("Invalid choice.")
-            atm.keypad.read_input(Config.MSG_PRESS_ENTER)
+            if atm.read_line_with_timeout(Config.MSG_PRESS_ENTER) is None:
+                return
+            atm.reset_timer()
 
 
 class WithdrawalState(State):
     """State for cash withdrawal."""
 
     def handle(self) -> None:
-        amount_str = self.context.atm.keypad.read_input(
+        amount_str = self.context.atm.read_line_with_timeout(
             "Enter amount (multiple of 100): ")
+        if amount_str is None:
+            return
+        amount_str = amount_str.strip()
+        self.context.atm.reset_timer()
         atm = self.context.atm
         try:
             amount = int(amount_str)
@@ -233,7 +271,9 @@ class WithdrawalState(State):
         except ValueError as e:
             atm.display.show_message(str(e))
             atm.sound_player.beep_error()
-        atm.keypad.read_input(Config.MSG_PRESS_ENTER)
+        if atm.read_line_with_timeout(Config.MSG_PRESS_ENTER) is None:
+            return
+        atm.reset_timer()
         self.context.change_state(AuthenticatedState(self.context))
 
 

@@ -14,6 +14,8 @@ class Config:
     PIN_LENGTH: Final[int] = 4
     MIN_WITHDRAW_AMOUNT: Final[int] = 100
     MAX_WITHDRAW_AMOUNT_PER_DAY: Final[int] = 50000
+    SESSION_TIMEOUT_SECONDS: Final[int] = 60
+    """Inactivity timeout: session ends after this many seconds without user input."""
     DEFAULT_CURRENCY: Final[str] = "BYN"
     ATM_CASH_DENOMINATIONS: Final[Tuple[int, ...]] = (
         20, 50, 100, 200, 500, 1000)

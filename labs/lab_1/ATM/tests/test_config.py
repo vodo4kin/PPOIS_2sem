@@ -23,5 +23,6 @@ class TestConfig:
         assert Config.MAX_PIN_ATTEMPTS == 3
         assert Config.PIN_LENGTH == 4
         assert Config.MIN_WITHDRAW_AMOUNT == 100
+        assert Config.SESSION_TIMEOUT_SECONDS >= 1
         assert Config.DEFAULT_CURRENCY == "BYN"
         assert 100 in Config.ATM_CASH_DENOMINATIONS

@@ -62,3 +62,137 @@
 [2026-02-22 18:32:53] INFO     ATM initialized successfully
 [2026-02-22 18:32:53] INFO     ATM main loop started
 [2026-02-22 18:32:55] INFO     ATM session ended
+[2026-02-22 19:19:48] INFO     ATM initialized successfully
+[2026-02-22 19:19:48] INFO     ATM main loop started
+[2026-02-22 19:23:42] INFO     ATM initialized successfully
+[2026-02-22 19:23:42] INFO     ATM main loop started
+[2026-02-22 19:24:15] INFO     State changed to: CardInsertedState
+[2026-02-22 19:24:15] INFO     State changed to: EnteringPINState
+[2026-02-22 19:24:45] INFO     State changed to: NoCardState
+[2026-02-22 19:25:17] INFO     State changed to: CardInsertedState
+[2026-02-22 19:25:17] INFO     State changed to: EnteringPINState
+[2026-02-22 19:25:24] INFO     State changed to: NoCardState
+[2026-02-22 19:25:40] INFO     State changed to: CardInsertedState
+[2026-02-22 19:25:40] INFO     State changed to: EnteringPINState
+[2026-02-22 19:25:41] INFO     State changed to: AuthenticatedState
+[2026-02-22 19:25:56] ERROR    *Beep*
+[2026-02-22 19:26:17] ERROR    *Beep*
+[2026-02-22 19:26:23] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-22 19:26:23] INFO     *Beep*
+[2026-02-22 19:26:36] ERROR    *Beep*
+[2026-02-22 19:26:38] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-22 19:26:38] INFO     *Beep*
+[2026-02-22 19:26:41] INFO     State changed to: WithdrawalState
+[2026-02-22 19:26:43] ERROR    *Beep*
+[2026-02-22 19:26:47] INFO     State changed to: AuthenticatedState
+[2026-02-22 19:26:50] INFO     State changed to: SessionEndingState
+[2026-02-22 19:26:50] INFO     State changed to: NoCardState
+[2026-02-22 19:26:52] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 19:26:52] INFO     ATM session ended
+[2026-02-22 19:34:33] INFO     ATM initialized successfully
+[2026-02-22 19:34:33] INFO     ATM main loop started
+[2026-02-22 19:34:42] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 19:34:42] INFO     ATM session ended
+[2026-02-22 19:34:56] INFO     ATM initialized successfully
+[2026-02-22 19:34:56] INFO     ATM main loop started
+[2026-02-22 19:35:36] INFO     State changed to: CardInsertedState
+[2026-02-22 19:35:36] INFO     State changed to: EnteringPINState
+[2026-02-22 19:36:16] INFO     State changed to: AuthenticatedState
+[2026-02-22 19:39:02] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-22 19:39:02] INFO     *Beep*
+[2026-02-22 19:39:31] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 19:39:31] INFO     ATM session ended
+[2026-02-22 19:39:32] INFO     ATM initialized successfully
+[2026-02-22 19:39:32] INFO     ATM main loop started
+[2026-02-22 19:39:39] INFO     State changed to: CardInsertedState
+[2026-02-22 19:39:39] INFO     State changed to: EnteringPINState
+[2026-02-22 19:40:01] INFO     State changed to: AuthenticatedState
+[2026-02-22 19:40:24] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 19:40:24] INFO     ATM session ended
+[2026-02-22 19:40:26] INFO     ATM initialized successfully
+[2026-02-22 19:40:26] INFO     ATM main loop started
+[2026-02-22 19:40:43] INFO     Incassator session started: 1000000000000001
+[2026-02-22 19:41:06] WARNING  Session timed out due to inactivity
+[2026-02-22 19:41:37] INFO     State changed to: CardInsertedState
+[2026-02-22 19:41:37] INFO     State changed to: EnteringPINState
+[2026-02-22 19:41:38] INFO     State changed to: AuthenticatedState
+[2026-02-22 19:42:02] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-22 19:42:02] INFO     *Beep*
+[2026-02-22 19:42:05] INFO     State changed to: WithdrawalState
+[2026-02-22 19:42:07] ERROR    *Beep*
+[2026-02-22 19:42:09] INFO     State changed to: AuthenticatedState
+[2026-02-22 19:45:08] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 19:45:08] INFO     ATM session ended
+[2026-02-22 19:51:19] INFO     ATM initialized successfully
+[2026-02-22 19:51:19] INFO     ATM main loop started
+[2026-02-22 19:51:26] INFO     State changed to: CardInsertedState
+[2026-02-22 19:51:26] INFO     State changed to: EnteringPINState
+[2026-02-22 19:51:27] INFO     State changed to: AuthenticatedState
+[2026-02-22 19:52:27] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-22 19:52:27] INFO     *Beep*
+[2026-02-22 19:52:31] INFO     State changed to: WithdrawalState
+[2026-02-22 19:52:33] ERROR    *Beep*
+[2026-02-22 19:52:41] INFO     State changed to: AuthenticatedState
+[2026-02-22 19:52:42] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 19:52:42] INFO     ATM session ended
+[2026-02-22 19:52:43] INFO     ATM initialized successfully
+[2026-02-22 19:52:43] INFO     ATM main loop started
+[2026-02-22 19:52:48] INFO     State changed to: CardInsertedState
+[2026-02-22 19:52:48] INFO     State changed to: EnteringPINState
+[2026-02-22 19:52:50] INFO     State changed to: AuthenticatedState
+[2026-02-22 19:53:00] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:00] INFO     State changed to: SessionEndingState
+[2026-02-22 19:53:00] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:00] INFO     State changed to: SessionEndingState
+[2026-02-22 19:53:00] INFO     Timeout detected in main loop
+[2026-02-22 19:53:00] INFO     State changed to: NoCardState
+[2026-02-22 19:53:11] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:11] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:11] INFO     Timeout detected in main loop
+[2026-02-22 19:53:21] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:21] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:21] INFO     Timeout detected in main loop
+[2026-02-22 19:53:31] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:31] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:31] INFO     Timeout detected in main loop
+[2026-02-22 19:53:41] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:41] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:41] INFO     Timeout detected in main loop
+[2026-02-22 19:53:51] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:51] WARNING  Session timed out due to inactivity
+[2026-02-22 19:53:51] INFO     Timeout detected in main loop
+[2026-02-22 19:53:59] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 19:53:59] INFO     ATM session ended
+[2026-02-22 19:59:01] INFO     ATM initialized successfully
+[2026-02-22 19:59:01] INFO     ATM main loop started
+[2026-02-22 19:59:09] INFO     State changed to: CardInsertedState
+[2026-02-22 19:59:09] INFO     State changed to: EnteringPINState
+[2026-02-22 19:59:19] WARNING  Session timed out due to inactivity
+[2026-02-22 19:59:19] INFO     State changed to: SessionEndingState
+[2026-02-22 19:59:19] WARNING  Session timed out due to inactivity
+[2026-02-22 19:59:19] INFO     State changed to: SessionEndingState
+[2026-02-22 19:59:19] INFO     Timeout detected in main loop
+[2026-02-22 19:59:19] INFO     State changed to: NoCardState
+[2026-02-22 19:59:40] INFO     State changed to: CardInsertedState
+[2026-02-22 19:59:40] INFO     State changed to: EnteringPINState
+[2026-02-22 19:59:50] WARNING  Session timed out due to inactivity
+[2026-02-22 19:59:50] INFO     State changed to: SessionEndingState
+[2026-02-22 19:59:50] WARNING  Session timed out due to inactivity
+[2026-02-22 19:59:50] INFO     State changed to: SessionEndingState
+[2026-02-22 19:59:50] INFO     Timeout detected in main loop
+[2026-02-22 19:59:50] INFO     State changed to: NoCardState
+[2026-02-22 20:00:04] INFO     State changed to: CardInsertedState
+[2026-02-22 20:00:04] INFO     State changed to: EnteringPINState
+[2026-02-22 20:00:05] INFO     State changed to: AuthenticatedState
+[2026-02-22 20:00:15] WARNING  Session timed out due to inactivity
+[2026-02-22 20:00:15] INFO     State changed to: SessionEndingState
+[2026-02-22 20:00:15] WARNING  Session timed out due to inactivity
+[2026-02-22 20:00:15] INFO     State changed to: SessionEndingState
+[2026-02-22 20:00:15] INFO     Timeout detected in main loop
+[2026-02-22 20:00:15] INFO     State changed to: NoCardState
+[2026-02-22 20:01:21] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 20:01:21] INFO     ATM session ended
+[2026-02-22 20:01:24] INFO     ATM initialized successfully
+[2026-02-22 20:01:24] INFO     ATM main loop started
+[2026-02-22 20:01:31] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-22 20:01:31] INFO     ATM session ended

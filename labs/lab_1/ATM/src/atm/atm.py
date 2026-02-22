@@ -3,7 +3,7 @@ Main ATM orchestrator module.
 Composes all subsystems and runs the main interaction loop.
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from .config import Config
 from .session_manager.logger import Logger
@@ -77,10 +77,17 @@ class ATM:
         def on_timeout() -> None:
             self.display.show_message(Config.MSG_TIMEOUT)
             self.logger.warning("Session timed out due to inactivity")
-            self.state_machine.change_state(SessionEndingState(self.state_machine))
+            if self.session.is_active and self.session.session_type == SessionType.CLIENT:
+                self.state_machine.change_state(SessionEndingState(self.state_machine))
+            elif self.session.is_active and self.session.session_type in (
+                SessionType.CASH_REPLENISHER,
+                SessionType.TECHNICIAN,
+            ):
+                self.session.end()
 
         self.session_timer = SessionTimer(
-            timeout_seconds=120, callback=on_timeout)
+            timeout_seconds=Config.SESSION_TIMEOUT_SECONDS, callback=on_timeout
+        )
         self.sound_player = SoundPlayer(self.logger)
 
         replenisher_auth = CashReplenisherAuthenticator(self.auth_service)
@@ -104,6 +111,7 @@ class ATM:
                 choice = self.display.ask_input(
                     "Session type: 1 Client, 2 Incassator, 3 Technician, 4 Exit: "
                 ).strip()
+                self.session_timer.reset()
                 if choice == "4":
                     break
                 if choice == "1":
@@ -146,17 +154,22 @@ class ATM:
             return
         self.session.start(SessionType.CASH_REPLENISHER, card_id)
         self.logger.info(f"Incassator session started: {card_id}")
+        self.session_timer.reset()
         try:
             while True:
                 action = self.keypad.read_input(
                     "1 Replenish, 2 Collect cash, 3 Replace cassette, 4 Exit: "
                 ).strip()
+                if self.session_timer.check_timeout():
+                    break
+                self.session_timer.reset()
                 if action == "4":
                     break
                 if action == "1":
                     inp = self.keypad.read_input(
                         "Denominations as 100:50 50:20 (denom:count): "
                     ).strip()
+                    self.session_timer.reset()
                     try:
                         denoms = {}
                         for part in inp.split():
@@ -170,6 +183,7 @@ class ATM:
                     inp = self.keypad.read_input(
                         "Collect as 100:10 50:5: "
                     ).strip()
+                    self.session_timer.reset()
                     try:
                         denoms = {}
                         for part in inp.split():
@@ -181,7 +195,9 @@ class ATM:
                         self.display.show_message(f"Error: {e}")
                 elif action == "3":
                     d = self.keypad.read_input("Denomination to replace (e.g. 100): ").strip()
+                    self.session_timer.reset()
                     c = self.keypad.read_input("New count: ").strip()
+                    self.session_timer.reset()
                     try:
                         self.cassette_manager.replace_cassette(int(d), int(c))
                         self.display.show_message("Cassette replaced.")
@@ -200,11 +216,15 @@ class ATM:
             return
         self.session.start(SessionType.TECHNICIAN, card_id)
         self.logger.info(f"Technician session started: {card_id}")
+        self.session_timer.reset()
         try:
             while True:
                 action = self.keypad.read_input(
                     "1 Collect retained cards, 2 Reboot, 3 Exit: "
                 ).strip()
+                if self.session_timer.check_timeout():
+                    break
+                self.session_timer.reset()
                 if action == "3":
                     break
                 if action == "1":
@@ -220,3 +240,8 @@ class ATM:
 
     def reset_timer(self) -> None:
         self.session_timer.reset()
+
+    def read_line_with_timeout(self, prompt: str) -> Optional[str]:
+        """Read a line from user; returns None if inactivity timeout fired (session ended)."""
+        from .user_interface.session_timer import read_line_with_timeout as _read
+        return _read(prompt, self.session_timer)

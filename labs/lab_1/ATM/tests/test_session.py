@@ -20,7 +20,8 @@ class TestSession:
         with pytest.raises(RuntimeError, match="already active"):
             s.start(SessionType.CLIENT, "2")
 
-    def test_end_without_start_raises(self):
+    def test_end_without_start_no_op(self):
+        """Calling end() when no active session is a no-op (idempotent)."""
         s = Session()
-        with pytest.raises(RuntimeError, match="No active"):
-            s.end()
+        s.end()
+        assert s.is_active is False

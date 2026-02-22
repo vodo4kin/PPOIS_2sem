@@ -206,7 +206,7 @@
 
 Предпросмотр:
 <div align="center">
-    <img src="uml/img/Class_Diagram.svg" width="600" alt="Диаграмма модулей и классов">
+    <img src="uml/img/Class_Diagram.svg" width="1000" alt="Диаграмма модулей и классов">
 </div>
 
 ## Документация программы

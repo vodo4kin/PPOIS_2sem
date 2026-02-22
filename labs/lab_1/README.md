@@ -80,7 +80,7 @@
 - **Завершение сессии** — Клиент выходит из системы, карта извлекается или сессия завершается по таймауту.
 
 <div align="center">
-   <img src="ATM/uml/img/ATM_Client_UseCases.svg" width="400" alt="Диаграмма клиентских сценариев" align>
+   <img src="ATM/uml/img/ATM_Client_UseCases.svg" width="600" alt="Диаграмма клиентских сценариев" align>
 </div>
 
 ### Сценарии обслуживания (Инкассатор)
@@ -90,7 +90,7 @@
 - **Замена кассеты** — Инкассатор заменяет кассету с наличными.
 
 <div align="center">
-    <img src="ATM/uml/img/ATM_Service_UseCases.svg" width="400" alt="Диаграмма сценариев обслуживания">
+    <img src="ATM/uml/img/ATM_Service_UseCases.svg" width="600" alt="Диаграмма сценариев обслуживания">
 </div>
 
 ### Сценарии технического обслуживания (Технический специалист)
@@ -101,7 +101,7 @@
 - **Перезагрузка банкомата** — Техник выполняет принудительную перезагрузку для устранения сбоев.
 
 <div align="center">
-    <img src="ATM/uml/img/ATM_Technician_UseCases.svg" width="400" alt="Диаграмма сценариев технического обслуживания">
+    <img src="ATM/uml/img/ATM_Technician_UseCases.svg" width="600" alt="Диаграмма сценариев технического обслуживания">
 </div>
 
 ## Диаграмма состояний
@@ -109,7 +109,7 @@
 ### Сессия клиента
 
 <div align="center">
-    <img src="ATM/uml/img/ATM_Client_StateMachine.svg" width="700" alt="Диаграмма состояний клиента">
+    <img src="ATM/uml/img/ATM_Client_StateMachine.svg" width="600" alt="Диаграмма состояний клиента">
 </div>
 
 ### Сессия инкассатора

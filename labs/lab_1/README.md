@@ -80,7 +80,7 @@
 - **Завершение сессии** — Клиент выходит из системы, карта извлекается или сессия завершается по таймауту.
 
 <div align="center">
-   <img src="uml/img/ATM_Client_UseCases.png" width="400" alt="Диаграмма клиентских сценариев" align>
+   <img src="ATM/uml/img/ATM_Client_UseCases.png" width="400" alt="Диаграмма клиентских сценариев" align>
 </div>
 
 ### Сценарии обслуживания (Инкассатор)
@@ -90,7 +90,7 @@
 - **Замена чековой ленты** — Инкассатор заменяет чековую ленту.
 
 <div align="center">
-    <img src="uml/img/ATM_Service_UseCases.png" width="400" alt="Диаграмма сценариев обслуживания">
+    <img src="ATM/uml/img/ATM_Service_UseCases.png" width="400" alt="Диаграмма сценариев обслуживания">
 </div>
 
 ### Сценарии технического обслуживания (Технический специалист)
@@ -101,7 +101,7 @@
 - **Перезагрузка банкомата** — Техник выполняет принудительную перезагрузку для устранения сбоев.
 
 <div align="center">
-    <img src="uml/img/ATM_Technician_UseCases.png" width="400" alt="Диаграмма сценариев технического обслуживания">
+    <img src="ATM/uml/img/ATM_Technician_UseCases.png" width="400" alt="Диаграмма сценариев технического обслуживания">
 </div>
 
 ## Диаграмма состояний
@@ -109,19 +109,19 @@
 ### Сессия клиента
 
 <div align="center">
-    <img src="uml/img/ATM_Client_StateMachine.png" width="700" alt="Диаграмма состояний клиента">
+    <img src="ATM/uml/img/ATM_Client_StateMachine.png" width="700" alt="Диаграмма состояний клиента">
 </div>
 
 ### Сессия инкассатора
 
 <div align="center">
-    <img src="uml/img/ATM_Service_StateMachine.png" width="600" alt="Диаграмма состояний инкассатора">
+    <img src="ATM/uml/img/ATM_Service_StateMachine.png" width="600" alt="Диаграмма состояний инкассатора">
 </div>
 
 ### Сессия технического специалиста
 
 <div align="center">
-    <img src="uml/img/ATM_Technician_StateMachine.png" width="600" alt="Диаграмма состояний технического специалиста">
+    <img src="ATM/uml/img/ATM_Technician_StateMachine.png" width="600" alt="Диаграмма состояний технического специалиста">
 </div>
 
 ## Проектирование классов
@@ -202,13 +202,13 @@
 
 ### Диаграмма модулей и классов
 
-Просмотреть в исходном качестве: [*тык*](uml/img/Class_Diagram.svg).
+Просмотреть в исходном качестве: [*тык*](ATM/uml/img/Class_Diagram.svg).
 
 Предпросмотр:
 <div align="center">
-    <img src="uml/img/Class_Diagram.svg" width="1000" alt="Диаграмма модулей и классов">
+    <img src="ATM/uml/img/Class_Diagram.svg" width="1000" alt="Диаграмма модулей и классов">
 </div>
 
 ## Документация программы
 
-Ознакомиться с документацией можно по [*ссылке*](docs/README.md).
+Ознакомиться с документацией можно по [*ссылке*](ATM/docs/README.md).

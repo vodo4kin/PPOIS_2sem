@@ -5,6 +5,7 @@ import pytest
 
 from atm.user_interface.display import Display
 from atm.user_interface.keypad import Keypad
+from atm.user_interface.receipt_printer import ReceiptPrinter
 from atm.user_interface.session_timer import SessionTimer
 
 
@@ -22,6 +23,24 @@ class TestDisplay:
         d = Display()
         with patch("builtins.input", return_value="1"):
             assert d.show_menu(["A", "B"]) == "1"
+
+
+class TestReceiptPrinter:
+    def test_print_receipt_success(self, capsys):
+        r = ReceiptPrinter()
+        r.print_receipt("Withdrawal", True, "Take your 500 BYN", amount=500)
+        out = capsys.readouterr().out
+        assert "RECEIPT" in out or "ЧЕК" in out
+        assert "Withdrawal" in out
+        assert "Success" in out
+        assert "500" in out
+
+    def test_print_receipt_failure(self, capsys):
+        r = ReceiptPrinter()
+        r.print_receipt("Transfer", False, "Insufficient funds", amount=1000)
+        out = capsys.readouterr().out
+        assert "Transfer" in out
+        assert "Failed" in out
 
 
 class TestKeypad:

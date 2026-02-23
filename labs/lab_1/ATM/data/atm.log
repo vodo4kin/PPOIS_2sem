@@ -223,3 +223,18 @@
 [2026-02-22 20:30:14] INFO     State changed to: NoCardState
 [2026-02-22 20:30:43] INFO     ATM stopped by user (KeyboardInterrupt)
 [2026-02-22 20:30:43] INFO     ATM session ended
+[2026-02-23 14:01:15] INFO     ATM initialized successfully
+[2026-02-23 14:01:15] INFO     ATM main loop started
+[2026-02-23 14:09:28] INFO     State changed to: CardInsertedState
+[2026-02-23 14:09:28] INFO     State changed to: EnteringPINState
+[2026-02-23 14:09:32] INFO     State changed to: AuthenticatedState
+[2026-02-23 14:09:35] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-23 14:09:35] INFO     *Beep*
+[2026-02-23 14:10:38] WARNING  Session timed out due to inactivity
+[2026-02-23 14:10:38] INFO     State changed to: SessionEndingState
+[2026-02-23 14:10:38] WARNING  Session timed out due to inactivity
+[2026-02-23 14:10:38] INFO     State changed to: SessionEndingState
+[2026-02-23 14:10:38] INFO     Timeout detected in main loop
+[2026-02-23 14:10:38] INFO     State changed to: NoCardState
+[2026-02-23 14:56:44] INFO     ATM stopped by user (KeyboardInterrupt)
+[2026-02-23 14:56:44] INFO     ATM session ended

@@ -58,6 +58,46 @@ def _beep_and_wait(atm: "ATM", success: bool) -> bool:
     return True
 
 
+def _offer_receipt(
+    atm: "ATM",
+    operation: str,
+    success: bool,
+    message: str,
+    **kwargs: object,
+) -> bool:
+    """
+    Ask user whether to print receipt (y/n). If yes, print receipt.
+    Returns False if timeout occurred.
+    """
+    line = atm.read_line_with_timeout(Config.MSG_PRINT_RECEIPT)
+    if line is None:
+        return False
+    atm.reset_timer()
+    if line.strip().lower() in ("y", "yes"):
+        atm.receipt_printer.print_receipt(operation, success, message, **kwargs)
+    return True
+
+
+def _beep_receipt_and_wait(
+    atm: "ATM",
+    success: bool,
+    operation: str,
+    message: str,
+    **kwargs: object,
+) -> bool:
+    """Beep, offer receipt (y/n), then wait for Enter. Returns False if timeout."""
+    if success:
+        atm.sound_player.beep_success()
+    else:
+        atm.sound_player.beep_error()
+    if not _offer_receipt(atm, operation, success, message, **kwargs):
+        return False
+    if atm.read_line_with_timeout(Config.MSG_PRESS_ENTER) is None:
+        return False
+    atm.reset_timer()
+    return True
+
+
 class NoCardState(State):
     """Initial state — no card inserted. No inactivity timeout here; only from PIN onward."""
 
@@ -167,13 +207,18 @@ class AuthenticatedState(State):
             t = BalanceInquiryTransaction(atm)
             ok = t.execute()
             if ok:
-                atm.sound_player.beep_success()
+                balance = atm.bank_gateway.get_balance(
+                    atm.card_reader.get_current_card().number
+                )
+                msg = f"Current balance: {balance} {Config.DEFAULT_CURRENCY}"
             else:
                 atm.display.show_message(t.get_result_message())
-                atm.sound_player.beep_error()
-            if atm.read_line_with_timeout(Config.MSG_PRESS_ENTER) is None:
+                msg = t.get_result_message()
+                balance = None
+            if not _beep_receipt_and_wait(
+                atm, ok, "Check Balance", msg, balance=balance
+            ):
                 return
-            atm.reset_timer()
 
         elif choice == "2":
             self.context.change_state(WithdrawalState(self.context))
@@ -183,7 +228,9 @@ class AuthenticatedState(State):
             ok = t.execute()
             if not ok and t.error_message:
                 atm.display.show_message(t.get_result_message())
-            if not _beep_and_wait(atm, ok):
+            if not _beep_receipt_and_wait(
+                atm, ok, "Deposit", t.get_result_message(), amount=t.amount
+            ):
                 return
 
         elif choice == "4":
@@ -205,11 +252,15 @@ class AuthenticatedState(State):
                     atm.display.show_message(msg)
                 else:
                     atm.display.show_message("Transfer successful.")
-                if not _beep_and_wait(atm, ok):
+                if not _beep_receipt_and_wait(
+                    atm, ok, "Transfer", msg, amount=amount, recipient=to_card
+                ):
                     return
             except Exception:
                 atm.display.show_message("Invalid amount.")
-                if not _beep_and_wait(atm, False):
+                if not _beep_receipt_and_wait(
+                    atm, False, "Transfer", "Invalid amount."
+                ):
                     return
 
         elif choice == "5":
@@ -230,12 +281,17 @@ class AuthenticatedState(State):
                     atm.display.show_message(msg)
                 else:
                     atm.display.show_message(
-                        f"Payment successful. {service}: {amount} {Config.DEFAULT_CURRENCY}")
-                if not _beep_and_wait(atm, ok):
+                        f"Payment successful. {service}: {amount} {Config.DEFAULT_CURRENCY}"
+                    )
+                if not _beep_receipt_and_wait(
+                    atm, ok, "Payment", msg, amount=amount, service=service
+                ):
                     return
             except Exception:
                 atm.display.show_message("Invalid amount.")
-                if not _beep_and_wait(atm, False):
+                if not _beep_receipt_and_wait(
+                    atm, False, "Payment", "Invalid amount."
+                ):
                     return
 
         elif choice == "6":
@@ -243,7 +299,9 @@ class AuthenticatedState(State):
             ok = t.execute()
             if not ok and t.error_message:
                 atm.display.show_message(t.get_result_message())
-            if not _beep_and_wait(atm, ok):
+            if not _beep_receipt_and_wait(
+                atm, ok, "Pin Change", t.get_result_message()
+            ):
                 return
 
         elif choice == "7":
@@ -267,6 +325,9 @@ class WithdrawalState(State):
         amount_str = amount_str.strip()
         self.context.atm.reset_timer()
         atm = self.context.atm
+        result_msg = ""
+        amount_used: int | None = None
+        success = False
         try:
             amount = int(amount_str)
             if amount % 100 != 0 or amount < Config.MIN_WITHDRAW_AMOUNT:
@@ -277,18 +338,19 @@ class WithdrawalState(State):
             )
             if success:
                 atm.cash_dispenser.dispense(amount)
-                msg = f"Withdrawal successful. Take your {amount} {Config.DEFAULT_CURRENCY}"
-                atm.display.show_message(msg)
-                atm.sound_player.beep_success()
+                result_msg = f"Withdrawal successful. Take your {amount} {Config.DEFAULT_CURRENCY}"
+                atm.display.show_message(result_msg)
+                amount_used = amount
             else:
-                atm.display.show_message(Config.MSG_INSUFFICIENT_FUNDS)
-                atm.sound_player.beep_error()
+                result_msg = Config.MSG_INSUFFICIENT_FUNDS
+                atm.display.show_message(result_msg)
         except ValueError as e:
-            atm.display.show_message(str(e))
-            atm.sound_player.beep_error()
-        if atm.read_line_with_timeout(Config.MSG_PRESS_ENTER) is None:
+            result_msg = str(e)
+            atm.display.show_message(result_msg)
+        if not _beep_receipt_and_wait(
+            atm, success, "Withdrawal", result_msg, amount=amount_used
+        ):
             return
-        atm.reset_timer()
         self.context.change_state(AuthenticatedState(self.context))
 
 

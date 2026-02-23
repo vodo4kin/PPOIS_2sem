@@ -63,7 +63,9 @@ end note
 
 note right of Authenticated
     После каждой операции:
-    результат на экран, *Beep* в лог, Enter
+    результат на экран, *Beep*, диалог
+    "Print receipt? (y/n)" — выдача чека по выбору,
+    затем Enter
 end note
 
 @enduml

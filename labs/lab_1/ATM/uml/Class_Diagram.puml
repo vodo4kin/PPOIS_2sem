@@ -9,6 +9,7 @@ package "UserInterfaceModule" {
     class Keypad
     class SessionTimer
     class SoundPlayer
+    class ReceiptPrinter
 }
 
 package "CardReaderModule" {
@@ -89,6 +90,7 @@ ATM *-- Display
 ATM *-- Keypad
 ATM *-- SessionTimer
 ATM *-- SoundPlayer
+ATM *-- ReceiptPrinter
 ATM *-- CashInventory
 ATM *-- CashDispenser
 ATM *-- CashAcceptor

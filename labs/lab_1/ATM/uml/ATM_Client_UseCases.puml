@@ -10,13 +10,14 @@ actor "Банк" as Bank
 
 rectangle "Модель банкомата" {
 
-    usecase "Аутентификация" as Auth
-    usecase "Просмотр баланса" as Balance
+    usecase "Аутентификация\n(ввод пин-кода)" as Auth
+    usecase "Проверка баланса" as Balance
     usecase "Снятие наличных" as Withdraw
     usecase "Внесение наличных" as Deposit
     usecase "Перевод средств" as Transfer
     usecase "Оплата услуг" as Payment
     usecase "Смена PIN-кода" as ChangePIN
+    usecase "Выдача чека" as Receipt
     usecase "Завершение сессии" as Logout
 
     usecase "Изъятие и блокировка карты" as RetainBlock
@@ -29,6 +30,7 @@ Client --> Deposit
 Client --> Transfer
 Client --> Payment
 Client --> ChangePIN
+Client --> Receipt
 Client --> Logout
 
 Auth .> Balance   : <<include>>
@@ -37,6 +39,13 @@ Auth .> Deposit   : <<include>>
 Auth .> Transfer  : <<include>>
 Auth .> Payment   : <<include>>
 Auth .> ChangePIN : <<include>>
+
+Balance ..> Receipt : <<extend>>
+Withdraw ..> Receipt : <<extend>>
+Deposit ..> Receipt : <<extend>>
+Transfer ..> Receipt : <<extend>>
+Payment ..> Receipt : <<extend>>
+ChangePIN ..> Receipt : <<extend>>
 
 Auth .> RetainBlock : <<extend>>
 

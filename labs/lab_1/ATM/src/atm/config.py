@@ -30,6 +30,7 @@ class Config:
     MSG_INSUFFICIENT_FUNDS: Final[str] = "Insufficient funds."
     MSG_INVALID_AMOUNT: Final[str] = "Invalid amount. Must be multiple of 100."
     MSG_PRESS_ENTER: Final[str] = "Press Enter to continue..."
+    MSG_PRINT_RECEIPT: Final[str] = "Print receipt? (y/n): "
 
     @classmethod
     def ensure_data_dir(cls) -> None:

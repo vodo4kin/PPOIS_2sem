@@ -23,6 +23,7 @@ from .user_interface.display import Display
 from .user_interface.keypad import Keypad
 from .user_interface.session_timer import SessionTimer
 from .user_interface.sound_player import SoundPlayer
+from .user_interface.receipt_printer import ReceiptPrinter
 from .cash_management.cash_replenisher_auth import CashReplenisherAuthenticator
 from .cash_management.cash_replenisher import CashReplenisher
 from .cash_management.cash_collector import CashCollector
@@ -59,6 +60,7 @@ class ATM:
     reboot_controller: RebootController
     retained_card_collector: RetainedCardCollector
     sound_player: SoundPlayer
+    receipt_printer: ReceiptPrinter
 
     def __init__(self) -> None:
         Config.ensure_data_dir()
@@ -89,6 +91,7 @@ class ATM:
             timeout_seconds=Config.SESSION_TIMEOUT_SECONDS, callback=on_timeout
         )
         self.sound_player = SoundPlayer(self.logger)
+        self.receipt_printer = ReceiptPrinter()
 
         replenisher_auth = CashReplenisherAuthenticator(self.auth_service)
         self.cash_replenisher = CashReplenisher(

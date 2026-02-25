@@ -1,5 +1,7 @@
+"""Factory for creating transaction instances by type name."""
+
 from decimal import Decimal
-from typing import TYPE_CHECKING, Dict, Any
+from typing import TYPE_CHECKING, Any
 
 from .transaction import Transaction
 from .balance_inquiry import BalanceInquiryTransaction
@@ -18,7 +20,7 @@ class TransactionFactory:
     def create(
         transaction_type: str,
         atm: "ATM",
-        params: Dict[str, Any] | None = None
+        params: dict[str, Any] | None = None
     ) -> Transaction:
         """Create appropriate transaction based on type."""
         params = params or {}

@@ -1,4 +1,5 @@
-from typing import Optional
+"""PIN format and validation (simulated hash comparison)."""
+
 from ..config import Config as conf
 
 

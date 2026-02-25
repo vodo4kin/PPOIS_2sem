@@ -1,4 +1,4 @@
-from typing import Dict
+"""Cash dispenser: dispense notes from inventory to user."""
 
 from ..config import Config
 from ..session_manager.logger import Logger
@@ -9,6 +9,7 @@ class CashDispenser:
     """Controls dispensing cash from cassettes."""
 
     def __init__(self, inventory: CashInventory) -> None:
+        """Store reference to cash inventory."""
         self.inventory = inventory
         self.logger = Logger()
 

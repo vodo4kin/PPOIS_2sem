@@ -1,5 +1,8 @@
+"""Save and load ATM state (e.g. cash inventory) to/from JSON."""
+
 import json
-from typing import Any, Dict
+from typing import Any
+
 from ..config import Config
 
 
@@ -7,10 +10,11 @@ class StateSaver:
     """Handles saving and loading ATM state to/from JSON."""
 
     def __init__(self) -> None:
+        """Ensure data dir exists and set state file path."""
         Config.ensure_data_dir()
         self.file_path = Config.ATM_STATE_FILE
 
-    def save(self, state: Dict[str, Any]) -> None:
+    def save(self, state: dict[str, Any]) -> None:
         """Save current state to file."""
         try:
             with open(self.file_path, "w", encoding="utf-8") as f:
@@ -19,7 +23,7 @@ class StateSaver:
             raise RuntimeError(
                 f"Failed to save state to {self.file_path}: {e}") from e
 
-    def load(self) -> Dict[str, Any]:
+    def load(self) -> dict[str, Any]:
         """Load state from file. Returns empty dict if file not found."""
         if not self.file_path.exists():
             return {}

@@ -1,3 +1,5 @@
+"""Base state class for the ATM state machine."""
+
 from abc import ABC, abstractmethod
 from typing import Any
 
@@ -6,6 +8,7 @@ class State(ABC):
     """Base class for all ATM states."""
 
     def __init__(self, context: Any) -> None:
+        """Store state machine context."""
         self.context = context
 
     @abstractmethod

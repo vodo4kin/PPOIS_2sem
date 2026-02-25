@@ -1,20 +1,20 @@
-from typing import Dict, List, Optional
+"""Simulated bank repository with JSON persistence for accounts and cards."""
+
+import json
 from dataclasses import asdict
 from decimal import Decimal
-import json
 from pathlib import Path
+from typing import Optional
 
 from ..config import Config
 from .account_data import AccountData
 
 
 class MockBankRepository:
-    """
-    Simulated bank database using JSON file for persistence.
-    All changes to accounts are saved to disk immediately.
-    """
+    """Simulated bank database using JSON file for persistence; changes saved immediately."""
 
     def __init__(self) -> None:
+        """Load or create accounts file and seed demo data if empty."""
         Config.ensure_data_dir()
         self.file_path: Path = Config.BANK_ACCOUNTS_FILE
         self._accounts = self._load_accounts()
@@ -22,7 +22,7 @@ class MockBankRepository:
             self._seed_demo_accounts()
             self._save_accounts()
 
-    def _load_accounts(self) -> Dict[str, AccountData]:
+    def _load_accounts(self) -> dict[str, AccountData]:
         """
         Load accounts from JSON file.
         Returns empty dict if file not found or invalid.
@@ -32,7 +32,7 @@ class MockBankRepository:
         try:
             with open(self.file_path, "r", encoding="utf-8") as f:
                 raw_data = json.load(f)
-            accounts: Dict[str, AccountData] = {}
+            accounts: dict[str, AccountData] = {}
             for card_num, data in raw_data.items():
                 try:
                     acc = AccountData(
@@ -60,7 +60,7 @@ class MockBankRepository:
         Save current accounts to JSON file.
         Converts Decimal to str for JSON compatibility.
         """
-        raw_data: Dict[str, dict] = {}
+        raw_data: dict[str, dict] = {}
         for card_num, account in self._accounts.items():
             raw_data[card_num] = asdict(account)
             raw_data[card_num]["balance"] = str(raw_data[card_num]["balance"])
@@ -138,11 +138,11 @@ class MockBankRepository:
         self._save_accounts()
         return True
 
-    def get_retained_card_numbers(self) -> List[str]:
+    def get_retained_card_numbers(self) -> list[str]:
         """Return list of card numbers that are currently retained (in the machine)."""
         return [num for num, acc in self._accounts.items() if acc.is_retained]
 
-    def collect_retained_cards(self, card_numbers: List[str]) -> None:
+    def collect_retained_cards(self, card_numbers: list[str]) -> None:
         """Mark cards as not retained and unblock. Used when technician collects."""
         for card_number in card_numbers:
             account = self.get_account(card_number)
@@ -191,7 +191,7 @@ class MockBankRepository:
         for acc in demos:
             self._accounts[acc.card_number] = acc
 
-    def get_all_accounts(self) -> Dict[str, AccountData]:
+    def get_all_accounts(self) -> dict[str, AccountData]:
         """
         Return a copy of all accounts (for debugging or admin purposes).
         """

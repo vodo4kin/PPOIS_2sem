@@ -1,7 +1,4 @@
-"""
-Main ATM orchestrator module.
-Composes all subsystems and runs the main interaction loop.
-"""
+"""Main ATM orchestrator: composes subsystems and runs the interaction loop."""
 
 from typing import TYPE_CHECKING, Optional
 
@@ -63,6 +60,7 @@ class ATM:
     receipt_printer: ReceiptPrinter
 
     def __init__(self) -> None:
+        """Initialize all subsystems (logger, gateway, card reader, UI, state machine, etc.)."""
         Config.ensure_data_dir()
         self.logger = Logger(log_file=str(Config.DATA_DIR / "atm.log"))
         self.bank_gateway = BankGateway()
@@ -106,6 +104,7 @@ class ATM:
         self.logger.info("ATM initialized successfully")
 
     def run(self) -> None:
+        """Run main loop: session type selection, then client/incassator/technician flow."""
         self.display.show_message(Config.MSG_WELCOME)
         self.logger.info("ATM main loop started")
         try:
@@ -252,9 +251,10 @@ class ATM:
             self.session.end()
 
     def reset_timer(self) -> None:
+        """Reset inactivity timer."""
         self.session_timer.reset()
 
     def read_line_with_timeout(self, prompt: str) -> Optional[str]:
-        """Read a line from user; returns None if inactivity timeout fired (session ended)."""
+        """Read a line from user; return None if inactivity timeout fired."""
         from .user_interface.session_timer import read_line_with_timeout as _read
         return _read(prompt, self.session_timer)

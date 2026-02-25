@@ -2,7 +2,7 @@
   "1234567890123456": {
     "card_number": "1234567890123456",
     "pin_hash": "hashed_pin_5432",
-    "balance": "5000",
+    "balance": "10000",
     "is_blocked": false,
     "is_retained": true,
     "owner_name": "Client One",
@@ -10,8 +10,8 @@
   },
   "1111111111111111": {
     "card_number": "1111111111111111",
-    "pin_hash": "hashed_pin_1234",
-    "balance": "5200",
+    "pin_hash": "hashed_pin_5555",
+    "balance": "200",
     "is_blocked": false,
     "is_retained": false,
     "owner_name": "Client Two",

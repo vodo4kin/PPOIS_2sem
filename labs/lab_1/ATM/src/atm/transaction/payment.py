@@ -1,3 +1,5 @@
+"""Payment transaction: pay for a service (utility, etc.) from account."""
+
 from decimal import Decimal
 from typing import TYPE_CHECKING
 
@@ -18,6 +20,7 @@ class PaymentTransaction(Transaction):
         self.service_name = service_name
 
     def execute(self) -> bool:
+        """Debit amount for service; return True on success."""
         if self.amount is None or self.amount <= 0:
             self.error_message = "Amount must be positive"
             return False

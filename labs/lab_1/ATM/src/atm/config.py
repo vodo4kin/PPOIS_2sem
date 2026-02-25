@@ -1,5 +1,7 @@
+"""Global configuration constants for the ATM system."""
+
 from pathlib import Path
-from typing import Final, Tuple
+from typing import Final
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
@@ -17,7 +19,7 @@ class Config:
     SESSION_TIMEOUT_SECONDS: Final[int] = 60
     """Inactivity timeout: session ends after this many seconds without user input."""
     DEFAULT_CURRENCY: Final[str] = "BYN"
-    ATM_CASH_DENOMINATIONS: Final[Tuple[int, ...]] = (
+    ATM_CASH_DENOMINATIONS: Final[tuple[int, ...]] = (
         20, 50, 100, 200, 500, 1000)
     MSG_WELCOME: Final[str] = "Welcome to the ATM"
     MSG_INSERT_CARD: Final[str] = "Enter card number (16 digits): "

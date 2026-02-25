@@ -1,3 +1,5 @@
+"""Withdrawal transaction: debit account and dispense cash."""
+
 from decimal import Decimal
 from typing import TYPE_CHECKING
 
@@ -15,6 +17,7 @@ class WithdrawalTransaction(Transaction):
         super().__init__(atm, amount=amount)
 
     def execute(self) -> bool:
+        """Withdraw amount from card account and dispense cash; return True on success."""
         if self.amount is None:
             raise RuntimeError("Withdrawal amount is required")
 

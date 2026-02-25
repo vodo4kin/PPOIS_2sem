@@ -1,3 +1,5 @@
+"""Technician authentication (delegates to auth service)."""
+
 from ..authentication.authentication_service import AuthenticationService
 
 
@@ -5,6 +7,7 @@ class TechnicianAuthenticator:
     """Authenticates technician for service operations."""
 
     def __init__(self, auth_service: AuthenticationService) -> None:
+        """Store reference to authentication service."""
         self.auth_service = auth_service
 
     def authenticate(self, user_id: str, pin: str) -> bool:

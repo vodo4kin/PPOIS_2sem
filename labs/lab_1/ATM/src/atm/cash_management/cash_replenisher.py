@@ -1,4 +1,6 @@
-from typing import Dict, TYPE_CHECKING
+"""Cash replenishment by incassator (with authentication)."""
+
+from typing import TYPE_CHECKING
 
 from ..config import Config
 from ..session_manager.logger import Logger
@@ -16,11 +18,12 @@ class CashReplenisher:
         inventory: "CashInventory",
         authenticator: CashReplenisherAuthenticator,
     ) -> None:
+        """Store inventory and authenticator."""
         self.inventory = inventory
         self.authenticator = authenticator
         self.logger = Logger()
 
-    def replenish(self, denominations: Dict[int, int], user_id: str, pin: str) -> None:
+    def replenish(self, denominations: dict[int, int], user_id: str, pin: str) -> None:
         """Replenish with authentication."""
         if not self.authenticator.authenticate(user_id, pin):
             raise RuntimeError("Authentication failed for replenisher")

@@ -1,6 +1,7 @@
+"""Cash inventory: denominations in cassettes and dispense logic."""
+
 import json
 from pathlib import Path
-from typing import Dict
 
 from ..config import Config
 from ..session_manager.state_saver import StateSaver
@@ -10,7 +11,8 @@ class CashInventory:
     """Manages cash denominations inside the ATM."""
 
     def __init__(self) -> None:
-        self._cassettes: Dict[int, int] = {
+        """Initialize cassettes from config and load persisted state."""
+        self._cassettes: dict[int, int] = {
             denom: 50 for denom in Config.ATM_CASH_DENOMINATIONS}
         self._saver = StateSaver()
         self._load_state()
@@ -53,13 +55,13 @@ class CashInventory:
                 remaining -= self._cassettes[denom] * denom
         return remaining == 0
 
-    def dispense(self, amount: int) -> Dict[int, int]:
+    def dispense(self, amount: int) -> dict[int, int]:
         """Dispense cash and update inventory."""
         if not self.can_dispense(amount):
             raise ValueError(
                 "Cannot dispense requested amount with available notes")
 
-        dispensed: Dict[int, int] = {}
+        dispensed: dict[int, int] = {}
         remaining = amount
         for denom in sorted(self._cassettes.keys(), reverse=True):
             if denom > remaining:

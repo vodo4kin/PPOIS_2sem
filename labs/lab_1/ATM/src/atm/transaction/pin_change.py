@@ -1,3 +1,5 @@
+"""PIN change transaction: update card PIN via bank."""
+
 from decimal import Decimal
 from typing import TYPE_CHECKING
 
@@ -15,6 +17,7 @@ class PinChangeTransaction(Transaction):
         super().__init__(atm, amount=None)
 
     def execute(self) -> bool:
+        """Prompt for current and new PIN, update via gateway; return True on success."""
         self.atm.display.show_message("Enter current PIN:")
         current_pin = self.atm.keypad.read_pin()
 

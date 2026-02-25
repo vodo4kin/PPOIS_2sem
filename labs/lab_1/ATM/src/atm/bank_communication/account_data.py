@@ -1,3 +1,5 @@
+"""Immutable bank account data linked to a card (balance, PIN hash, block/retain flags)."""
+
 from dataclasses import dataclass
 from decimal import Decimal
 from typing import Optional
@@ -5,10 +7,7 @@ from typing import Optional
 
 @dataclass(frozen=True)
 class AccountData:
-    """
-    Data structure representing a bank account linked to a card.
-    Immutable (frozen=True) to prevent accidental changes.
-    """
+    """Data structure for a bank account linked to a card; immutable (frozen=True)."""
 
     card_number: str
     """Card number, e.g. '1234-5678-9012-3456'."""

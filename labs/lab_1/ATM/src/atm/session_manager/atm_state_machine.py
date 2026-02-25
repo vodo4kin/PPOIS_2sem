@@ -1,10 +1,11 @@
+"""ATM state machine: client flow (no card, PIN, menu, withdrawal, exit)."""
+
 from abc import ABC, abstractmethod
 from decimal import Decimal
 from typing import TYPE_CHECKING
 
 from ..config import Config
 from .state import State
-from .session import Session
 from .session_type import SessionType
 from .logger import Logger
 
@@ -16,6 +17,7 @@ class ATMStateMachine:
     """Finite State Machine that controls ATM behavior."""
 
     def __init__(self, atm: "ATM") -> None:
+        """Store ATM reference and set initial state to NoCard."""
         self.atm: "ATM" = atm
         self.current_state: State = NoCardState(self)
         self.current_state.on_enter()

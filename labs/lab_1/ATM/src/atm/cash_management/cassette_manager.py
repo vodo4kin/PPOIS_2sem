@@ -1,3 +1,5 @@
+"""Cassette management: replace denomination counts."""
+
 from typing import TYPE_CHECKING
 
 from ..session_manager.logger import Logger
@@ -10,6 +12,7 @@ class CassetteManager:
     """Manages physical cassettes in ATM."""
 
     def __init__(self, inventory: "CashInventory") -> None:
+        """Store reference to cash inventory."""
         self.inventory = inventory
         self.logger = Logger()
 

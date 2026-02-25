@@ -1,3 +1,5 @@
+"""Balance inquiry transaction: show current account balance."""
+
 from typing import TYPE_CHECKING
 
 from ..config import Config
@@ -14,6 +16,7 @@ class BalanceInquiryTransaction(Transaction):
         super().__init__(atm, amount=None)
 
     def execute(self) -> bool:
+        """Retrieve and display balance for current card; return True on success."""
         card = self.atm.card_reader.get_current_card()
         if card is None:
             self.error_message = "No card inserted"

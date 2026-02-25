@@ -1,3 +1,5 @@
+"""Card authentication and PIN attempt tracking."""
+
 from typing import Optional
 
 from ..bank_communication.bank_gateway import BankGateway
@@ -10,6 +12,7 @@ class AuthenticationService:
     """Handles card authentication and PIN attempts."""
 
     def __init__(self, bank_gateway: BankGateway) -> None:
+        """Initialize with bank gateway and validators."""
         self._gateway = bank_gateway
         self._pin_validator = PinValidator()
         self._block_checker = CardBlockStatusChecker(bank_gateway)
@@ -40,4 +43,5 @@ class AuthenticationService:
         return False
 
     def get_attempts_left(self, card_number: str) -> Optional[int]:
+        """Return remaining PIN attempts for card, or None if not tracked."""
         return self._attempts_left.get(card_number)

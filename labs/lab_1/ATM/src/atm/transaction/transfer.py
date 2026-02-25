@@ -1,3 +1,5 @@
+"""Transfer transaction: move funds from current card to another account."""
+
 from decimal import Decimal
 from typing import TYPE_CHECKING
 
@@ -18,6 +20,7 @@ class TransferTransaction(Transaction):
         self.to_card_number = to_card_number
 
     def execute(self) -> bool:
+        """Transfer amount to target card; return True on success."""
         if self.amount is None or self.amount <= 0:
             self.error_message = "Amount must be positive"
             return False

@@ -1,3 +1,5 @@
+"""Card insertion, ejection and retainer simulation."""
+
 from typing import Optional
 
 from .card import Card
@@ -35,7 +37,9 @@ class CardReader:
             self._current_card = None
 
     def get_current_card(self) -> Optional[Card]:
+        """Return currently inserted card or None."""
         return self._current_card
 
     def get_retainer(self) -> CardRetainer:
+        """Return the card retainer (for technician collection)."""
         return self._retainer

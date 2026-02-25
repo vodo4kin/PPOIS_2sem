@@ -1,5 +1,7 @@
+"""Gateway to the bank (simulated via mock repository)."""
+
 from decimal import Decimal
-from typing import List, Optional
+from typing import Optional
 
 from .mock_bank_repo import MockBankRepository
 from .account_data import AccountData
@@ -9,6 +11,7 @@ class BankGateway:
     """Interface to the bank system (simulated via mock repository)."""
 
     def __init__(self) -> None:
+        """Initialize gateway with mock repository."""
         self._repo = MockBankRepository()
 
     def validate_pin(self, card_number: str, pin: str) -> bool:
@@ -57,11 +60,11 @@ class BankGateway:
         """Mark card as retained (seized by ATM) or not."""
         return self._repo.set_card_retained(card_number, retained)
 
-    def get_retained_card_numbers(self) -> List[str]:
+    def get_retained_card_numbers(self) -> list[str]:
         """Return card numbers that are currently retained in the machine."""
         return self._repo.get_retained_card_numbers()
 
-    def collect_retained_cards(self, card_numbers: List[str]) -> None:
+    def collect_retained_cards(self, card_numbers: list[str]) -> None:
         """Mark cards as not retained and unblock (after technician collects)."""
         self._repo.collect_retained_cards(card_numbers)
 

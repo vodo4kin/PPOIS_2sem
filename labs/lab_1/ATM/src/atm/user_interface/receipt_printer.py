@@ -14,13 +14,7 @@ class ReceiptPrinter:
         message: str,
         **kwargs: Any,
     ) -> None:
-        """
-        Output a receipt to the console (and optionally to file).
-        operation: name of operation (e.g. "Check Balance", "Withdrawal")
-        success: whether the operation succeeded
-        message: result message to include
-        kwargs: optional details (amount, balance, recipient, service, etc.)
-        """
+        """Output a receipt to the console (operation, result, optional details in kwargs)."""
         lines = [
             "=" * 40,
             "                    RECEIPT / ЧЕК",

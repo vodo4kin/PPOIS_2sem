@@ -1,4 +1,6 @@
-from typing import Dict, TYPE_CHECKING
+"""Cash collection (removal) from cassettes by incassator."""
+
+from typing import TYPE_CHECKING
 
 from ..config import Config
 from ..session_manager.logger import Logger
@@ -11,10 +13,11 @@ class CashCollector:
     """Handles cash collection (removal) from ATM cassettes by incassator."""
 
     def __init__(self, inventory: "CashInventory") -> None:
+        """Store reference to cash inventory."""
         self.inventory = inventory
         self.logger = Logger()
 
-    def collect(self, denominations: Dict[int, int]) -> None:
+    def collect(self, denominations: dict[int, int]) -> None:
         """Remove cash from cassettes."""
         for denom, count in denominations.items():
             if denom in Config.ATM_CASH_DENOMINATIONS:

@@ -1,3 +1,5 @@
+"""Authentication for incassator (cash replenishment/collection)."""
+
 from ..authentication.authentication_service import AuthenticationService
 
 

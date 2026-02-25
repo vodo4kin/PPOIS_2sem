@@ -1,3 +1,5 @@
+"""Simple file and console logger for ATM events."""
+
 import datetime
 from typing import Optional, TextIO
 
@@ -6,18 +8,22 @@ class Logger:
     """Simple logger for ATM events."""
 
     def __init__(self, log_file: Optional[str] = None) -> None:
+        """Open optional log file for appending."""
         self.log_file = log_file
         self._file_handle: Optional[TextIO] = None
         if self.log_file:
             self._file_handle = open(self.log_file, "a", encoding="utf-8")
 
     def info(self, message: str) -> None:
+        """Log info message."""
         self._log("INFO", message)
 
     def warning(self, message: str) -> None:
+        """Log warning message."""
         self._log("WARNING", message)
 
     def error(self, message: str) -> None:
+        """Log error message."""
         self._log("ERROR", message)
 
     def _log(self, level: str, message: str) -> None:

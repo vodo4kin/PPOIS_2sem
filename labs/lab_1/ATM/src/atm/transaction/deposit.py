@@ -1,5 +1,6 @@
+"""Deposit transaction: accept cash and credit account."""
+
 from decimal import Decimal
-from typing import TYPE_CHECKING, Dict
 
 from .transaction import Transaction
 from ..config import Config
@@ -13,6 +14,7 @@ class DepositTransaction(Transaction):
         super().__init__(atm, amount=None)
 
     def execute(self) -> bool:
+        """Accept denominations from user, credit account; return True on success."""
         self.atm.display.show_message("Please insert cash into acceptor.")
         try:
             input_str = self.atm.keypad.read_input(
@@ -22,7 +24,7 @@ class DepositTransaction(Transaction):
                 self.error_message = "Deposit cancelled"
                 return False
 
-            denominations: Dict[int, int] = {}
+            denominations: dict[int, int] = {}
             for part in input_str.split():
                 denom_str, count_str = part.split(":")
                 denom = int(denom_str)

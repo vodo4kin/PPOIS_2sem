@@ -1,5 +1,3 @@
-from unittest.mock import MagicMock
-
 from atm.session_manager.state import State
 from atm.session_manager.atm_state_machine import (
     ATMStateMachine,

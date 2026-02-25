@@ -1,8 +1,10 @@
+"""Inactivity timer and timeout-aware input for the ATM."""
+
 from __future__ import annotations
 
-from typing import Callable, Optional
 import sys
 import time
+from typing import Callable, Optional
 
 try:
     from select import select
@@ -15,11 +17,7 @@ def read_line_with_timeout(  # pragma: no cover - interactive/timeout path
     prompt: str,
     timer: SessionTimer,
 ) -> Optional[str]:
-    """
-    Read a line from stdin with inactivity timeout.
-    If no input for timer.timeout seconds, call timer.callback() and return None.
-    On Windows or when select is not available, falls back to blocking input() (no timeout).
-    """
+    """Read a line from stdin; return None on inactivity timeout (calls timer callback)."""
     if prompt:
         print(prompt, end="", flush=True)
     if not _SELECT_AVAILABLE:
@@ -58,6 +56,7 @@ class SessionTimer:
         timeout_seconds: int = 60,
         callback: Optional[Callable[[], None]] = None,
     ) -> None:
+        """Set timeout in seconds and optional callback on timeout."""
         self.timeout = timeout_seconds
         self.callback: Optional[Callable[[], None]] = callback
         self.last_activity = time.time()

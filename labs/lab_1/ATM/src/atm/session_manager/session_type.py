@@ -1,3 +1,5 @@
+"""Session type enumeration (client, incassator, technician)."""
+
 from enum import Enum, auto
 
 

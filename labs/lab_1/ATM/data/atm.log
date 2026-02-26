@@ -268,3 +268,23 @@
 [2026-02-23 23:22:35] INFO     Incassator session started: 1000000000000001
 [2026-02-23 23:23:58] INFO     Technician session started: 1000000000000002
 [2026-02-23 23:24:29] INFO     ATM session ended
+[2026-02-26 00:02:49] INFO     ATM initialized successfully
+[2026-02-26 00:02:49] INFO     ATM main loop started
+[2026-02-26 00:03:35] INFO     State changed to: CardInsertedState
+[2026-02-26 00:03:35] INFO     State changed to: EnteringPINState
+[2026-02-26 00:03:45] INFO     State changed to: AuthenticatedState
+[2026-02-26 00:03:48] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-26 00:03:48] INFO     *Beep*
+[2026-02-26 00:04:05] INFO     BalanceInquiryTransaction - SUCCESS
+[2026-02-26 00:04:05] INFO     *Beep*
+[2026-02-26 00:04:15] INFO     State changed to: WithdrawalState
+[2026-02-26 00:04:44] INFO     *Beep*
+[2026-02-26 00:04:51] INFO     State changed to: AuthenticatedState
+[2026-02-26 00:04:59] ERROR    *Beep*
+[2026-02-26 00:05:32] ERROR    *Beep*
+[2026-02-26 00:06:55] WARNING  Session timed out due to inactivity
+[2026-02-26 00:06:55] INFO     State changed to: SessionEndingState
+[2026-02-26 00:06:55] WARNING  Session timed out due to inactivity
+[2026-02-26 00:06:55] INFO     State changed to: SessionEndingState
+[2026-02-26 00:06:55] INFO     Timeout detected in main loop
+[2026-02-26 00:06:55] INFO     State changed to: NoCardState

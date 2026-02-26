@@ -13,7 +13,7 @@ class CashAcceptor:
         self.inventory = inventory
         self.logger = Logger()
 
-    def accept(self, denominations: dict[int, int]) -> int:
+    def accept(self, denominations: dict[str, int]) -> int:
         """Accept cash as {denomination: count}; return total amount accepted."""
         total = 0
         for denom, count in denominations.items():

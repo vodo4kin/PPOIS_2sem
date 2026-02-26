@@ -11,7 +11,7 @@
   "1111111111111111": {
     "card_number": "1111111111111111",
     "pin_hash": "hashed_pin_5555",
-    "balance": "200",
+    "balance": "0",
     "is_blocked": false,
     "is_retained": false,
     "owner_name": "Client Two",

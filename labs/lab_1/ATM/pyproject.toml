@@ -7,7 +7,6 @@ source = ["src/atm"]
 omit = [
     "src/atm/main.py",
     "*/__init__.py",
-    "*card_status_checker*",
     "src/atm/atm.py",
     "src/atm/session_manager/atm_state_machine.py",
 ]

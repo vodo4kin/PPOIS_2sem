@@ -84,7 +84,7 @@
 - **Завершение сессии** — Клиент выходит из системы, карта извлекается или сессия завершается по таймауту.
 
 <div align="center">
-   <img src="ATM/uml/img/ATM_Client_UseCases.svg" width="600" alt="Диаграмма клиентских сценариев" align>
+   <img src="ATM/uml/img/ATM_Client_UseCases.svg" width="600" alt="Диаграмма клиентских сценариев">
 </div>
 
 ### Сценарии обслуживания (Инкассатор)

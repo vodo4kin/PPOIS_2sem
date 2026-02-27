@@ -4,14 +4,14 @@
     "pin_hash": "hashed_pin_5432",
     "balance": "10000",
     "is_blocked": false,
-    "is_retained": true,
+    "is_retained": false,
     "owner_name": "Client One",
     "expiry_date": "12/28"
   },
   "1111111111111111": {
     "card_number": "1111111111111111",
-    "pin_hash": "hashed_pin_5555",
-    "balance": "0",
+    "pin_hash": "hashed_pin_1111",
+    "balance": "5122",
     "is_blocked": false,
     "is_retained": false,
     "owner_name": "Client Two",

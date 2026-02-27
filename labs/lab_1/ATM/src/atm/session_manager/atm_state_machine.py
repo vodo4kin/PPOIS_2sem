@@ -76,7 +76,8 @@ def _offer_receipt(
         return False
     atm.reset_timer()
     if line.strip().lower() in ("y", "yes"):
-        atm.receipt_printer.print_receipt(operation, success, message, **kwargs)
+        atm.receipt_printer.print_receipt(
+            operation, success, message, **kwargs)
     return True
 
 
@@ -117,18 +118,22 @@ class NoCardState(State):
                 self.context.atm.display.show_message("Card not found.")
                 return
             if account.is_retained:
-                self.context.atm.display.show_message(Config.MSG_CARD_ALREADY_RETAINED)
+                self.context.atm.display.show_message(
+                    Config.MSG_CARD_ALREADY_RETAINED)
                 return
             if account.is_blocked:
                 expiry = account.expiry_date
-                card = self.context.atm.card_reader.insert_card(card_number, expiry)
+                card = self.context.atm.card_reader.insert_card(
+                    card_number, expiry)
                 if card:
                     self.context.atm.card_reader.retain_card()
-                    self.context.atm.bank_gateway.set_card_retained(card_number, True)
+                    self.context.atm.bank_gateway.set_card_retained(
+                        card_number, True)
                 self.context.atm.display.show_message(Config.MSG_CARD_BLOCKED)
                 return
             expiry = account.expiry_date
-            card = self.context.atm.card_reader.insert_card(card_number, expiry)
+            card = self.context.atm.card_reader.insert_card(
+                card_number, expiry)
             if card:
                 self.context.atm.session.start(SessionType.CLIENT, card.number)
                 self.context.change_state(CardInsertedState(self.context))
